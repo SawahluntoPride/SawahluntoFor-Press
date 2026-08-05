@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  name           String?
+  password       String?
+  role           Role          @default(MEDIA)
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  proposals      Proposal[]
+  comments       Comment[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+enum Role {
+  MEDIA
+  APPARATUS
+  ADMIN
+}
+
+model Organization {
+  id            String    @id @default(cuid())
+  name          String
+  slug          String    @unique
+  type          OrgType
+  description   String?
+  contactPerson String?
+  phone         String?
+  email         String?
+  address       String?
+  website       String?
+  verified      Boolean   @default(false)
+  users         User[]
+  proposals     Proposal[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum OrgType {
+  MEDIA_OUTLET
+  GOV_DEPT
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  slug      String     @unique
+  proposals Proposal[]
+}
+
+model Proposal {
+  id         String         @id @default(cuid())
+  title      String
+  slug       String         @unique
+  orgId      String?
+  org        Organization?  @relation(fields: [orgId], references: [id])
+  authorId   String
+  author     User           @relation(fields: [authorId], references: [id])
+  categoryId String?
+  category   Category?      @relation(fields: [categoryId], references: [id])
+  status     ProposalStatus @default(DRAFT)
+  type       ProposalType?
+  scheduledAt DateTime?
+  location   String?
+  description String?
+  budget     Int?
+  attachments Json?
+  statusNote String?
+  comments   Comment[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+}
+
+enum ProposalStatus {
+  DRAFT
+  SUBMITTED
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum ProposalType {
+  PRESS_RELEASE
+  PRESS_CONFERENCE
+  MEDIA_VISIT
+  INTERVIEW
+  EVENT_PARTNERSHIP
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  proposalId String
+  proposal    Proposal @relation(fields: [proposalId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  body      String
+  createdAt DateTime @default(now())
+}
