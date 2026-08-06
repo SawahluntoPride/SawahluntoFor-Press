@@ -49,3 +49,11 @@ next-env.d.ts
 # dev/build log capture
 /dev.log
 /build.log
+
+# IDE files
+.idea/
+.poolside/
+*.iml
+
+# Upload directory
+/public/uploads/

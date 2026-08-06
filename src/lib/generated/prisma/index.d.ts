@@ -38,6 +38,11 @@ export type Proposal = $Result.DefaultSelection<Prisma.$ProposalPayload>
  * 
  */
 export type Comment = $Result.DefaultSelection<Prisma.$CommentPayload>
+/**
+ * Model Document
+ * 
+ */
+export type Document = $Result.DefaultSelection<Prisma.$DocumentPayload>
 
 /**
  * Enums
@@ -268,6 +273,16 @@ export class PrismaClient<
     * ```
     */
   get comment(): Prisma.CommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.document`: Exposes CRUD operations for the **Document** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Documents
+    * const documents = await prisma.document.findMany()
+    * ```
+    */
+  get document(): Prisma.DocumentDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -713,7 +728,8 @@ export namespace Prisma {
     Organization: 'Organization',
     Category: 'Category',
     Proposal: 'Proposal',
-    Comment: 'Comment'
+    Comment: 'Comment',
+    Document: 'Document'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -732,7 +748,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "organization" | "category" | "proposal" | "comment"
+      modelProps: "user" | "organization" | "category" | "proposal" | "comment" | "document"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1106,6 +1122,80 @@ export namespace Prisma {
           }
         }
       }
+      Document: {
+        payload: Prisma.$DocumentPayload<ExtArgs>
+        fields: Prisma.DocumentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DocumentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DocumentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          findFirst: {
+            args: Prisma.DocumentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DocumentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          findMany: {
+            args: Prisma.DocumentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+          }
+          create: {
+            args: Prisma.DocumentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          createMany: {
+            args: Prisma.DocumentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DocumentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+          }
+          delete: {
+            args: Prisma.DocumentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          update: {
+            args: Prisma.DocumentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          deleteMany: {
+            args: Prisma.DocumentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DocumentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DocumentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>[]
+          }
+          upsert: {
+            args: Prisma.DocumentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DocumentPayload>
+          }
+          aggregate: {
+            args: Prisma.DocumentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDocument>
+          }
+          groupBy: {
+            args: Prisma.DocumentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DocumentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DocumentCountArgs<ExtArgs>
+            result: $Utils.Optional<DocumentCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1207,6 +1297,7 @@ export namespace Prisma {
     category?: CategoryOmit
     proposal?: ProposalOmit
     comment?: CommentOmit
+    document?: DocumentOmit
   }
 
   /* Types for Logging */
@@ -1287,13 +1378,13 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    proposals: number
     comments: number
+    proposals: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    proposals?: boolean | UserCountOutputTypeCountProposalsArgs
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
+    proposals?: boolean | UserCountOutputTypeCountProposalsArgs
   }
 
   // Custom InputTypes
@@ -1310,15 +1401,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountProposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProposalWhereInput
+  export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CommentWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CommentWhereInput
+  export type UserCountOutputTypeCountProposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProposalWhereInput
   }
 
 
@@ -1327,13 +1418,13 @@ export namespace Prisma {
    */
 
   export type OrganizationCountOutputType = {
-    users: number
     proposals: number
+    users: number
   }
 
   export type OrganizationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | OrganizationCountOutputTypeCountUsersArgs
     proposals?: boolean | OrganizationCountOutputTypeCountProposalsArgs
+    users?: boolean | OrganizationCountOutputTypeCountUsersArgs
   }
 
   // Custom InputTypes
@@ -1350,15 +1441,15 @@ export namespace Prisma {
   /**
    * OrganizationCountOutputType without action
    */
-  export type OrganizationCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
+  export type OrganizationCountOutputTypeCountProposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProposalWhereInput
   }
 
   /**
    * OrganizationCountOutputType without action
    */
-  export type OrganizationCountOutputTypeCountProposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProposalWhereInput
+  export type OrganizationCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -1399,10 +1490,12 @@ export namespace Prisma {
 
   export type ProposalCountOutputType = {
     comments: number
+    documents: number
   }
 
   export type ProposalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | ProposalCountOutputTypeCountCommentsArgs
+    documents?: boolean | ProposalCountOutputTypeCountDocumentsArgs
   }
 
   // Custom InputTypes
@@ -1421,6 +1514,13 @@ export namespace Prisma {
    */
   export type ProposalCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CommentWhereInput
+  }
+
+  /**
+   * ProposalCountOutputType without action
+   */
+  export type ProposalCountOutputTypeCountDocumentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentWhereInput
   }
 
 
@@ -1616,9 +1716,9 @@ export namespace Prisma {
     organizationId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    organization?: boolean | User$organizationArgs<ExtArgs>
-    proposals?: boolean | User$proposalsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
+    proposals?: boolean | User$proposalsArgs<ExtArgs>
+    organization?: boolean | User$organizationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1659,9 +1759,9 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    organization?: boolean | User$organizationArgs<ExtArgs>
-    proposals?: boolean | User$proposalsArgs<ExtArgs>
     comments?: boolean | User$commentsArgs<ExtArgs>
+    proposals?: boolean | User$proposalsArgs<ExtArgs>
+    organization?: boolean | User$organizationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1674,9 +1774,9 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      organization: Prisma.$OrganizationPayload<ExtArgs> | null
-      proposals: Prisma.$ProposalPayload<ExtArgs>[]
       comments: Prisma.$CommentPayload<ExtArgs>[]
+      proposals: Prisma.$ProposalPayload<ExtArgs>[]
+      organization: Prisma.$OrganizationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2081,9 +2181,9 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    organization<T extends User$organizationArgs<ExtArgs> = {}>(args?: Subset<T, User$organizationArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    proposals<T extends User$proposalsArgs<ExtArgs> = {}>(args?: Subset<T, User$proposalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    proposals<T extends User$proposalsArgs<ExtArgs> = {}>(args?: Subset<T, User$proposalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    organization<T extends User$organizationArgs<ExtArgs> = {}>(args?: Subset<T, User$organizationArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2515,22 +2615,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.organization
+   * User.comments
    */
-  export type User$organizationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Organization
+     * Select specific fields to fetch from the Comment
      */
-    select?: OrganizationSelect<ExtArgs> | null
+    select?: CommentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Organization
+     * Omit specific fields from the Comment
      */
-    omit?: OrganizationOmit<ExtArgs> | null
+    omit?: CommentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: OrganizationInclude<ExtArgs> | null
-    where?: OrganizationWhereInput
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
   }
 
   /**
@@ -2558,27 +2663,22 @@ export namespace Prisma {
   }
 
   /**
-   * User.comments
+   * User.organization
    */
-  export type User$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$organizationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the Organization
      */
-    select?: CommentSelect<ExtArgs> | null
+    select?: OrganizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Comment
+     * Omit specific fields from the Organization
      */
-    omit?: CommentOmit<ExtArgs> | null
+    omit?: OrganizationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CommentInclude<ExtArgs> | null
-    where?: CommentWhereInput
-    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
-    cursor?: CommentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+    include?: OrganizationInclude<ExtArgs> | null
+    where?: OrganizationWhereInput
   }
 
   /**
@@ -2828,8 +2928,8 @@ export namespace Prisma {
     verified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    users?: boolean | Organization$usersArgs<ExtArgs>
     proposals?: boolean | Organization$proposalsArgs<ExtArgs>
+    users?: boolean | Organization$usersArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["organization"]>
 
@@ -2883,8 +2983,8 @@ export namespace Prisma {
 
   export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "type" | "description" | "contactPerson" | "phone" | "email" | "address" | "website" | "verified" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | Organization$usersArgs<ExtArgs>
     proposals?: boolean | Organization$proposalsArgs<ExtArgs>
+    users?: boolean | Organization$usersArgs<ExtArgs>
     _count?: boolean | OrganizationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2893,8 +2993,8 @@ export namespace Prisma {
   export type $OrganizationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Organization"
     objects: {
-      users: Prisma.$UserPayload<ExtArgs>[]
       proposals: Prisma.$ProposalPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3304,8 +3404,8 @@ export namespace Prisma {
    */
   export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    users<T extends Organization$usersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     proposals<T extends Organization$proposalsArgs<ExtArgs> = {}>(args?: Subset<T, Organization$proposalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    users<T extends Organization$usersArgs<ExtArgs> = {}>(args?: Subset<T, Organization$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3734,30 +3834,6 @@ export namespace Prisma {
   }
 
   /**
-   * Organization.users
-   */
-  export type Organization$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
    * Organization.proposals
    */
   export type Organization$proposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3779,6 +3855,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProposalScalarFieldEnum | ProposalScalarFieldEnum[]
+  }
+
+  /**
+   * Organization.users
+   */
+  export type Organization$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -4878,6 +4978,7 @@ export namespace Prisma {
     statusNote: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    referenceNumber: string | null
   }
 
   export type ProposalMaxAggregateOutputType = {
@@ -4896,6 +4997,7 @@ export namespace Prisma {
     statusNote: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    referenceNumber: string | null
   }
 
   export type ProposalCountAggregateOutputType = {
@@ -4915,6 +5017,7 @@ export namespace Prisma {
     statusNote: number
     createdAt: number
     updatedAt: number
+    referenceNumber: number
     _all: number
   }
 
@@ -4943,6 +5046,7 @@ export namespace Prisma {
     statusNote?: true
     createdAt?: true
     updatedAt?: true
+    referenceNumber?: true
   }
 
   export type ProposalMaxAggregateInputType = {
@@ -4961,6 +5065,7 @@ export namespace Prisma {
     statusNote?: true
     createdAt?: true
     updatedAt?: true
+    referenceNumber?: true
   }
 
   export type ProposalCountAggregateInputType = {
@@ -4980,6 +5085,7 @@ export namespace Prisma {
     statusNote?: true
     createdAt?: true
     updatedAt?: true
+    referenceNumber?: true
     _all?: true
   }
 
@@ -5086,6 +5192,7 @@ export namespace Prisma {
     statusNote: string | null
     createdAt: Date
     updatedAt: Date
+    referenceNumber: string | null
     _count: ProposalCountAggregateOutputType | null
     _avg: ProposalAvgAggregateOutputType | null
     _sum: ProposalSumAggregateOutputType | null
@@ -5124,10 +5231,12 @@ export namespace Prisma {
     statusNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    org?: boolean | Proposal$orgArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | Proposal$categoryArgs<ExtArgs>
+    referenceNumber?: boolean
     comments?: boolean | Proposal$commentsArgs<ExtArgs>
+    documents?: boolean | Proposal$documentsArgs<ExtArgs>
+    category?: boolean | Proposal$categoryArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    org?: boolean | Proposal$orgArgs<ExtArgs>
     _count?: boolean | ProposalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proposal"]>
 
@@ -5148,9 +5257,10 @@ export namespace Prisma {
     statusNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    org?: boolean | Proposal$orgArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    referenceNumber?: boolean
     category?: boolean | Proposal$categoryArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    org?: boolean | Proposal$orgArgs<ExtArgs>
   }, ExtArgs["result"]["proposal"]>
 
   export type ProposalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5170,9 +5280,10 @@ export namespace Prisma {
     statusNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    org?: boolean | Proposal$orgArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
+    referenceNumber?: boolean
     category?: boolean | Proposal$categoryArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    org?: boolean | Proposal$orgArgs<ExtArgs>
   }, ExtArgs["result"]["proposal"]>
 
   export type ProposalSelectScalar = {
@@ -5192,34 +5303,37 @@ export namespace Prisma {
     statusNote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    referenceNumber?: boolean
   }
 
-  export type ProposalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "orgId" | "authorId" | "categoryId" | "status" | "type" | "scheduledAt" | "location" | "description" | "budget" | "attachments" | "statusNote" | "createdAt" | "updatedAt", ExtArgs["result"]["proposal"]>
+  export type ProposalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "slug" | "orgId" | "authorId" | "categoryId" | "status" | "type" | "scheduledAt" | "location" | "description" | "budget" | "attachments" | "statusNote" | "createdAt" | "updatedAt" | "referenceNumber", ExtArgs["result"]["proposal"]>
   export type ProposalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    org?: boolean | Proposal$orgArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | Proposal$categoryArgs<ExtArgs>
     comments?: boolean | Proposal$commentsArgs<ExtArgs>
+    documents?: boolean | Proposal$documentsArgs<ExtArgs>
+    category?: boolean | Proposal$categoryArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    org?: boolean | Proposal$orgArgs<ExtArgs>
     _count?: boolean | ProposalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProposalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    org?: boolean | Proposal$orgArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Proposal$categoryArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    org?: boolean | Proposal$orgArgs<ExtArgs>
   }
   export type ProposalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    org?: boolean | Proposal$orgArgs<ExtArgs>
-    author?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Proposal$categoryArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+    org?: boolean | Proposal$orgArgs<ExtArgs>
   }
 
   export type $ProposalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Proposal"
     objects: {
-      org: Prisma.$OrganizationPayload<ExtArgs> | null
-      author: Prisma.$UserPayload<ExtArgs>
-      category: Prisma.$CategoryPayload<ExtArgs> | null
       comments: Prisma.$CommentPayload<ExtArgs>[]
+      documents: Prisma.$DocumentPayload<ExtArgs>[]
+      category: Prisma.$CategoryPayload<ExtArgs> | null
+      author: Prisma.$UserPayload<ExtArgs>
+      org: Prisma.$OrganizationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5238,6 +5352,7 @@ export namespace Prisma {
       statusNote: string | null
       createdAt: Date
       updatedAt: Date
+      referenceNumber: string | null
     }, ExtArgs["result"]["proposal"]>
     composites: {}
   }
@@ -5632,10 +5747,11 @@ export namespace Prisma {
    */
   export interface Prisma__ProposalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    org<T extends Proposal$orgArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$orgArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    category<T extends Proposal$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     comments<T extends Proposal$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    documents<T extends Proposal$documentsArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    category<T extends Proposal$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    org<T extends Proposal$orgArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$orgArgs<ExtArgs>>): Prisma__OrganizationClient<$Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5681,6 +5797,7 @@ export namespace Prisma {
     readonly statusNote: FieldRef<"Proposal", 'String'>
     readonly createdAt: FieldRef<"Proposal", 'DateTime'>
     readonly updatedAt: FieldRef<"Proposal", 'DateTime'>
+    readonly referenceNumber: FieldRef<"Proposal", 'String'>
   }
     
 
@@ -6075,22 +6192,51 @@ export namespace Prisma {
   }
 
   /**
-   * Proposal.org
+   * Proposal.comments
    */
-  export type Proposal$orgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Proposal$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Organization
+     * Select specific fields to fetch from the Comment
      */
-    select?: OrganizationSelect<ExtArgs> | null
+    select?: CommentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Organization
+     * Omit specific fields from the Comment
      */
-    omit?: OrganizationOmit<ExtArgs> | null
+    omit?: CommentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: OrganizationInclude<ExtArgs> | null
-    where?: OrganizationWhereInput
+    include?: CommentInclude<ExtArgs> | null
+    where?: CommentWhereInput
+    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
+    cursor?: CommentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+  }
+
+  /**
+   * Proposal.documents
+   */
+  export type Proposal$documentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    where?: DocumentWhereInput
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    cursor?: DocumentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
   }
 
   /**
@@ -6113,27 +6259,22 @@ export namespace Prisma {
   }
 
   /**
-   * Proposal.comments
+   * Proposal.org
    */
-  export type Proposal$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Proposal$orgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Comment
+     * Select specific fields to fetch from the Organization
      */
-    select?: CommentSelect<ExtArgs> | null
+    select?: OrganizationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Comment
+     * Omit specific fields from the Organization
      */
-    omit?: CommentOmit<ExtArgs> | null
+    omit?: OrganizationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CommentInclude<ExtArgs> | null
-    where?: CommentWhereInput
-    orderBy?: CommentOrderByWithRelationInput | CommentOrderByWithRelationInput[]
-    cursor?: CommentWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CommentScalarFieldEnum | CommentScalarFieldEnum[]
+    include?: OrganizationInclude<ExtArgs> | null
+    where?: OrganizationWhereInput
   }
 
   /**
@@ -6319,8 +6460,8 @@ export namespace Prisma {
     userId?: boolean
     body?: boolean
     createdAt?: boolean
-    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6329,8 +6470,8 @@ export namespace Prisma {
     userId?: boolean
     body?: boolean
     createdAt?: boolean
-    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6339,8 +6480,8 @@ export namespace Prisma {
     userId?: boolean
     body?: boolean
     createdAt?: boolean
-    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["comment"]>
 
   export type CommentSelectScalar = {
@@ -6353,23 +6494,23 @@ export namespace Prisma {
 
   export type CommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "proposalId" | "userId" | "body" | "createdAt", ExtArgs["result"]["comment"]>
   export type CommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
   }
   export type CommentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
   }
   export type CommentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
   }
 
   export type $CommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Comment"
     objects: {
-      proposal: Prisma.$ProposalPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
+      proposal: Prisma.$ProposalPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6771,8 +6912,8 @@ export namespace Prisma {
    */
   export interface Prisma__CommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    proposal<T extends ProposalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProposalDefaultArgs<ExtArgs>>): Prisma__ProposalClient<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    proposal<T extends ProposalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProposalDefaultArgs<ExtArgs>>): Prisma__ProposalClient<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7220,6 +7361,1161 @@ export namespace Prisma {
 
 
   /**
+   * Model Document
+   */
+
+  export type AggregateDocument = {
+    _count: DocumentCountAggregateOutputType | null
+    _avg: DocumentAvgAggregateOutputType | null
+    _sum: DocumentSumAggregateOutputType | null
+    _min: DocumentMinAggregateOutputType | null
+    _max: DocumentMaxAggregateOutputType | null
+  }
+
+  export type DocumentAvgAggregateOutputType = {
+    size: number | null
+  }
+
+  export type DocumentSumAggregateOutputType = {
+    size: number | null
+  }
+
+  export type DocumentMinAggregateOutputType = {
+    id: string | null
+    proposalId: string | null
+    name: string | null
+    filename: string | null
+    url: string | null
+    size: number | null
+    uploadedAt: Date | null
+    verified: boolean | null
+    verifiedAt: Date | null
+    verifiedBy: string | null
+  }
+
+  export type DocumentMaxAggregateOutputType = {
+    id: string | null
+    proposalId: string | null
+    name: string | null
+    filename: string | null
+    url: string | null
+    size: number | null
+    uploadedAt: Date | null
+    verified: boolean | null
+    verifiedAt: Date | null
+    verifiedBy: string | null
+  }
+
+  export type DocumentCountAggregateOutputType = {
+    id: number
+    proposalId: number
+    name: number
+    filename: number
+    url: number
+    size: number
+    uploadedAt: number
+    verified: number
+    verifiedAt: number
+    verifiedBy: number
+    _all: number
+  }
+
+
+  export type DocumentAvgAggregateInputType = {
+    size?: true
+  }
+
+  export type DocumentSumAggregateInputType = {
+    size?: true
+  }
+
+  export type DocumentMinAggregateInputType = {
+    id?: true
+    proposalId?: true
+    name?: true
+    filename?: true
+    url?: true
+    size?: true
+    uploadedAt?: true
+    verified?: true
+    verifiedAt?: true
+    verifiedBy?: true
+  }
+
+  export type DocumentMaxAggregateInputType = {
+    id?: true
+    proposalId?: true
+    name?: true
+    filename?: true
+    url?: true
+    size?: true
+    uploadedAt?: true
+    verified?: true
+    verifiedAt?: true
+    verifiedBy?: true
+  }
+
+  export type DocumentCountAggregateInputType = {
+    id?: true
+    proposalId?: true
+    name?: true
+    filename?: true
+    url?: true
+    size?: true
+    uploadedAt?: true
+    verified?: true
+    verifiedAt?: true
+    verifiedBy?: true
+    _all?: true
+  }
+
+  export type DocumentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Document to aggregate.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Documents
+    **/
+    _count?: true | DocumentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DocumentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DocumentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DocumentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DocumentMaxAggregateInputType
+  }
+
+  export type GetDocumentAggregateType<T extends DocumentAggregateArgs> = {
+        [P in keyof T & keyof AggregateDocument]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDocument[P]>
+      : GetScalarType<T[P], AggregateDocument[P]>
+  }
+
+
+
+
+  export type DocumentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DocumentWhereInput
+    orderBy?: DocumentOrderByWithAggregationInput | DocumentOrderByWithAggregationInput[]
+    by: DocumentScalarFieldEnum[] | DocumentScalarFieldEnum
+    having?: DocumentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DocumentCountAggregateInputType | true
+    _avg?: DocumentAvgAggregateInputType
+    _sum?: DocumentSumAggregateInputType
+    _min?: DocumentMinAggregateInputType
+    _max?: DocumentMaxAggregateInputType
+  }
+
+  export type DocumentGroupByOutputType = {
+    id: string
+    proposalId: string
+    name: string
+    filename: string
+    url: string
+    size: number | null
+    uploadedAt: Date
+    verified: boolean
+    verifiedAt: Date | null
+    verifiedBy: string | null
+    _count: DocumentCountAggregateOutputType | null
+    _avg: DocumentAvgAggregateOutputType | null
+    _sum: DocumentSumAggregateOutputType | null
+    _min: DocumentMinAggregateOutputType | null
+    _max: DocumentMaxAggregateOutputType | null
+  }
+
+  type GetDocumentGroupByPayload<T extends DocumentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DocumentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DocumentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DocumentGroupByOutputType[P]>
+            : GetScalarType<T[P], DocumentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    proposalId?: boolean
+    name?: boolean
+    filename?: boolean
+    url?: boolean
+    size?: boolean
+    uploadedAt?: boolean
+    verified?: boolean
+    verifiedAt?: boolean
+    verifiedBy?: boolean
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["document"]>
+
+  export type DocumentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    proposalId?: boolean
+    name?: boolean
+    filename?: boolean
+    url?: boolean
+    size?: boolean
+    uploadedAt?: boolean
+    verified?: boolean
+    verifiedAt?: boolean
+    verifiedBy?: boolean
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["document"]>
+
+  export type DocumentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    proposalId?: boolean
+    name?: boolean
+    filename?: boolean
+    url?: boolean
+    size?: boolean
+    uploadedAt?: boolean
+    verified?: boolean
+    verifiedAt?: boolean
+    verifiedBy?: boolean
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["document"]>
+
+  export type DocumentSelectScalar = {
+    id?: boolean
+    proposalId?: boolean
+    name?: boolean
+    filename?: boolean
+    url?: boolean
+    size?: boolean
+    uploadedAt?: boolean
+    verified?: boolean
+    verifiedAt?: boolean
+    verifiedBy?: boolean
+  }
+
+  export type DocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "proposalId" | "name" | "filename" | "url" | "size" | "uploadedAt" | "verified" | "verifiedAt" | "verifiedBy", ExtArgs["result"]["document"]>
+  export type DocumentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
+  }
+  export type DocumentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
+  }
+  export type DocumentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    proposal?: boolean | ProposalDefaultArgs<ExtArgs>
+  }
+
+  export type $DocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Document"
+    objects: {
+      proposal: Prisma.$ProposalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      proposalId: string
+      name: string
+      filename: string
+      url: string
+      size: number | null
+      uploadedAt: Date
+      verified: boolean
+      verifiedAt: Date | null
+      verifiedBy: string | null
+    }, ExtArgs["result"]["document"]>
+    composites: {}
+  }
+
+  type DocumentGetPayload<S extends boolean | null | undefined | DocumentDefaultArgs> = $Result.GetResult<Prisma.$DocumentPayload, S>
+
+  type DocumentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DocumentCountAggregateInputType | true
+    }
+
+  export interface DocumentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Document'], meta: { name: 'Document' } }
+    /**
+     * Find zero or one Document that matches the filter.
+     * @param {DocumentFindUniqueArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DocumentFindUniqueArgs>(args: SelectSubset<T, DocumentFindUniqueArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Document that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DocumentFindUniqueOrThrowArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DocumentFindUniqueOrThrowArgs>(args: SelectSubset<T, DocumentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Document that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentFindFirstArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DocumentFindFirstArgs>(args?: SelectSubset<T, DocumentFindFirstArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Document that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentFindFirstOrThrowArgs} args - Arguments to find a Document
+     * @example
+     * // Get one Document
+     * const document = await prisma.document.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DocumentFindFirstOrThrowArgs>(args?: SelectSubset<T, DocumentFindFirstOrThrowArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Documents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Documents
+     * const documents = await prisma.document.findMany()
+     * 
+     * // Get first 10 Documents
+     * const documents = await prisma.document.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const documentWithIdOnly = await prisma.document.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DocumentFindManyArgs>(args?: SelectSubset<T, DocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Document.
+     * @param {DocumentCreateArgs} args - Arguments to create a Document.
+     * @example
+     * // Create one Document
+     * const Document = await prisma.document.create({
+     *   data: {
+     *     // ... data to create a Document
+     *   }
+     * })
+     * 
+     */
+    create<T extends DocumentCreateArgs>(args: SelectSubset<T, DocumentCreateArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Documents.
+     * @param {DocumentCreateManyArgs} args - Arguments to create many Documents.
+     * @example
+     * // Create many Documents
+     * const document = await prisma.document.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DocumentCreateManyArgs>(args?: SelectSubset<T, DocumentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Documents and returns the data saved in the database.
+     * @param {DocumentCreateManyAndReturnArgs} args - Arguments to create many Documents.
+     * @example
+     * // Create many Documents
+     * const document = await prisma.document.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Documents and only return the `id`
+     * const documentWithIdOnly = await prisma.document.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DocumentCreateManyAndReturnArgs>(args?: SelectSubset<T, DocumentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Document.
+     * @param {DocumentDeleteArgs} args - Arguments to delete one Document.
+     * @example
+     * // Delete one Document
+     * const Document = await prisma.document.delete({
+     *   where: {
+     *     // ... filter to delete one Document
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DocumentDeleteArgs>(args: SelectSubset<T, DocumentDeleteArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Document.
+     * @param {DocumentUpdateArgs} args - Arguments to update one Document.
+     * @example
+     * // Update one Document
+     * const document = await prisma.document.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DocumentUpdateArgs>(args: SelectSubset<T, DocumentUpdateArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Documents.
+     * @param {DocumentDeleteManyArgs} args - Arguments to filter Documents to delete.
+     * @example
+     * // Delete a few Documents
+     * const { count } = await prisma.document.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DocumentDeleteManyArgs>(args?: SelectSubset<T, DocumentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Documents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Documents
+     * const document = await prisma.document.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DocumentUpdateManyArgs>(args: SelectSubset<T, DocumentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Documents and returns the data updated in the database.
+     * @param {DocumentUpdateManyAndReturnArgs} args - Arguments to update many Documents.
+     * @example
+     * // Update many Documents
+     * const document = await prisma.document.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Documents and only return the `id`
+     * const documentWithIdOnly = await prisma.document.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DocumentUpdateManyAndReturnArgs>(args: SelectSubset<T, DocumentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Document.
+     * @param {DocumentUpsertArgs} args - Arguments to update or create a Document.
+     * @example
+     * // Update or create a Document
+     * const document = await prisma.document.upsert({
+     *   create: {
+     *     // ... data to create a Document
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Document we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DocumentUpsertArgs>(args: SelectSubset<T, DocumentUpsertArgs<ExtArgs>>): Prisma__DocumentClient<$Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Documents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentCountArgs} args - Arguments to filter Documents to count.
+     * @example
+     * // Count the number of Documents
+     * const count = await prisma.document.count({
+     *   where: {
+     *     // ... the filter for the Documents we want to count
+     *   }
+     * })
+    **/
+    count<T extends DocumentCountArgs>(
+      args?: Subset<T, DocumentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DocumentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Document.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DocumentAggregateArgs>(args: Subset<T, DocumentAggregateArgs>): Prisma.PrismaPromise<GetDocumentAggregateType<T>>
+
+    /**
+     * Group by Document.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DocumentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DocumentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DocumentGroupByArgs['orderBy'] }
+        : { orderBy?: DocumentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DocumentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDocumentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Document model
+   */
+  readonly fields: DocumentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Document.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DocumentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    proposal<T extends ProposalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProposalDefaultArgs<ExtArgs>>): Prisma__ProposalClient<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Document model
+   */
+  interface DocumentFieldRefs {
+    readonly id: FieldRef<"Document", 'String'>
+    readonly proposalId: FieldRef<"Document", 'String'>
+    readonly name: FieldRef<"Document", 'String'>
+    readonly filename: FieldRef<"Document", 'String'>
+    readonly url: FieldRef<"Document", 'String'>
+    readonly size: FieldRef<"Document", 'Int'>
+    readonly uploadedAt: FieldRef<"Document", 'DateTime'>
+    readonly verified: FieldRef<"Document", 'Boolean'>
+    readonly verifiedAt: FieldRef<"Document", 'DateTime'>
+    readonly verifiedBy: FieldRef<"Document", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Document findUnique
+   */
+  export type DocumentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document findUniqueOrThrow
+   */
+  export type DocumentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document findFirst
+   */
+  export type DocumentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Documents.
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Documents.
+     */
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * Document findFirstOrThrow
+   */
+  export type DocumentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Document to fetch.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Documents.
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Documents.
+     */
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * Document findMany
+   */
+  export type DocumentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which Documents to fetch.
+     */
+    where?: DocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Documents to fetch.
+     */
+    orderBy?: DocumentOrderByWithRelationInput | DocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Documents.
+     */
+    cursor?: DocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Documents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Documents.
+     */
+    skip?: number
+    distinct?: DocumentScalarFieldEnum | DocumentScalarFieldEnum[]
+  }
+
+  /**
+   * Document create
+   */
+  export type DocumentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Document.
+     */
+    data: XOR<DocumentCreateInput, DocumentUncheckedCreateInput>
+  }
+
+  /**
+   * Document createMany
+   */
+  export type DocumentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Documents.
+     */
+    data: DocumentCreateManyInput | DocumentCreateManyInput[]
+  }
+
+  /**
+   * Document createManyAndReturn
+   */
+  export type DocumentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Documents.
+     */
+    data: DocumentCreateManyInput | DocumentCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Document update
+   */
+  export type DocumentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Document.
+     */
+    data: XOR<DocumentUpdateInput, DocumentUncheckedUpdateInput>
+    /**
+     * Choose, which Document to update.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document updateMany
+   */
+  export type DocumentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Documents.
+     */
+    data: XOR<DocumentUpdateManyMutationInput, DocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which Documents to update
+     */
+    where?: DocumentWhereInput
+    /**
+     * Limit how many Documents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Document updateManyAndReturn
+   */
+  export type DocumentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * The data used to update Documents.
+     */
+    data: XOR<DocumentUpdateManyMutationInput, DocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which Documents to update
+     */
+    where?: DocumentWhereInput
+    /**
+     * Limit how many Documents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Document upsert
+   */
+  export type DocumentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Document to update in case it exists.
+     */
+    where: DocumentWhereUniqueInput
+    /**
+     * In case the Document found by the `where` argument doesn't exist, create a new Document with this data.
+     */
+    create: XOR<DocumentCreateInput, DocumentUncheckedCreateInput>
+    /**
+     * In case the Document was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DocumentUpdateInput, DocumentUncheckedUpdateInput>
+  }
+
+  /**
+   * Document delete
+   */
+  export type DocumentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+    /**
+     * Filter which Document to delete.
+     */
+    where: DocumentWhereUniqueInput
+  }
+
+  /**
+   * Document deleteMany
+   */
+  export type DocumentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Documents to delete
+     */
+    where?: DocumentWhereInput
+    /**
+     * Limit how many Documents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Document without action
+   */
+  export type DocumentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Document
+     */
+    select?: DocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Document
+     */
+    omit?: DocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DocumentInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -7288,7 +8584,8 @@ export namespace Prisma {
     attachments: 'attachments',
     statusNote: 'statusNote',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    referenceNumber: 'referenceNumber'
   };
 
   export type ProposalScalarFieldEnum = (typeof ProposalScalarFieldEnum)[keyof typeof ProposalScalarFieldEnum]
@@ -7303,6 +8600,22 @@ export namespace Prisma {
   };
 
   export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+  export const DocumentScalarFieldEnum: {
+    id: 'id',
+    proposalId: 'proposalId',
+    name: 'name',
+    filename: 'filename',
+    url: 'url',
+    size: 'size',
+    uploadedAt: 'uploadedAt',
+    verified: 'verified',
+    verifiedAt: 'verifiedAt',
+    verifiedBy: 'verifiedBy'
+  };
+
+  export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7443,9 +8756,9 @@ export namespace Prisma {
     organizationId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    organization?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
-    proposals?: ProposalListRelationFilter
     comments?: CommentListRelationFilter
+    proposals?: ProposalListRelationFilter
+    organization?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7457,9 +8770,9 @@ export namespace Prisma {
     organizationId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    organization?: OrganizationOrderByWithRelationInput
-    proposals?: ProposalOrderByRelationAggregateInput
     comments?: CommentOrderByRelationAggregateInput
+    proposals?: ProposalOrderByRelationAggregateInput
+    organization?: OrganizationOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7474,9 +8787,9 @@ export namespace Prisma {
     organizationId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    organization?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
-    proposals?: ProposalListRelationFilter
     comments?: CommentListRelationFilter
+    proposals?: ProposalListRelationFilter
+    organization?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7524,8 +8837,8 @@ export namespace Prisma {
     verified?: BoolFilter<"Organization"> | boolean
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
-    users?: UserListRelationFilter
     proposals?: ProposalListRelationFilter
+    users?: UserListRelationFilter
   }
 
   export type OrganizationOrderByWithRelationInput = {
@@ -7542,8 +8855,8 @@ export namespace Prisma {
     verified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    users?: UserOrderByRelationAggregateInput
     proposals?: ProposalOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
   }
 
   export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -7563,8 +8876,8 @@ export namespace Prisma {
     verified?: BoolFilter<"Organization"> | boolean
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
-    users?: UserListRelationFilter
     proposals?: ProposalListRelationFilter
+    users?: UserListRelationFilter
   }, "id" | "slug">
 
   export type OrganizationOrderByWithAggregationInput = {
@@ -7670,10 +8983,12 @@ export namespace Prisma {
     statusNote?: StringNullableFilter<"Proposal"> | string | null
     createdAt?: DateTimeFilter<"Proposal"> | Date | string
     updatedAt?: DateTimeFilter<"Proposal"> | Date | string
-    org?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
-    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    referenceNumber?: StringNullableFilter<"Proposal"> | string | null
     comments?: CommentListRelationFilter
+    documents?: DocumentListRelationFilter
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    org?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
   }
 
   export type ProposalOrderByWithRelationInput = {
@@ -7693,10 +9008,12 @@ export namespace Prisma {
     statusNote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    org?: OrganizationOrderByWithRelationInput
-    author?: UserOrderByWithRelationInput
-    category?: CategoryOrderByWithRelationInput
+    referenceNumber?: SortOrderInput | SortOrder
     comments?: CommentOrderByRelationAggregateInput
+    documents?: DocumentOrderByRelationAggregateInput
+    category?: CategoryOrderByWithRelationInput
+    author?: UserOrderByWithRelationInput
+    org?: OrganizationOrderByWithRelationInput
   }
 
   export type ProposalWhereUniqueInput = Prisma.AtLeast<{
@@ -7719,10 +9036,12 @@ export namespace Prisma {
     statusNote?: StringNullableFilter<"Proposal"> | string | null
     createdAt?: DateTimeFilter<"Proposal"> | Date | string
     updatedAt?: DateTimeFilter<"Proposal"> | Date | string
-    org?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
-    author?: XOR<UserScalarRelationFilter, UserWhereInput>
-    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    referenceNumber?: StringNullableFilter<"Proposal"> | string | null
     comments?: CommentListRelationFilter
+    documents?: DocumentListRelationFilter
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    org?: XOR<OrganizationNullableScalarRelationFilter, OrganizationWhereInput> | null
   }, "id" | "slug">
 
   export type ProposalOrderByWithAggregationInput = {
@@ -7742,6 +9061,7 @@ export namespace Prisma {
     statusNote?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    referenceNumber?: SortOrderInput | SortOrder
     _count?: ProposalCountOrderByAggregateInput
     _avg?: ProposalAvgOrderByAggregateInput
     _max?: ProposalMaxOrderByAggregateInput
@@ -7769,6 +9089,7 @@ export namespace Prisma {
     statusNote?: StringNullableWithAggregatesFilter<"Proposal"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Proposal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Proposal"> | Date | string
+    referenceNumber?: StringNullableWithAggregatesFilter<"Proposal"> | string | null
   }
 
   export type CommentWhereInput = {
@@ -7780,8 +9101,8 @@ export namespace Prisma {
     userId?: StringFilter<"Comment"> | string
     body?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
-    proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
   }
 
   export type CommentOrderByWithRelationInput = {
@@ -7790,8 +9111,8 @@ export namespace Prisma {
     userId?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
-    proposal?: ProposalOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    proposal?: ProposalOrderByWithRelationInput
   }
 
   export type CommentWhereUniqueInput = Prisma.AtLeast<{
@@ -7803,8 +9124,8 @@ export namespace Prisma {
     userId?: StringFilter<"Comment"> | string
     body?: StringFilter<"Comment"> | string
     createdAt?: DateTimeFilter<"Comment"> | Date | string
-    proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
   }, "id">
 
   export type CommentOrderByWithAggregationInput = {
@@ -7829,6 +9150,88 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Comment"> | Date | string
   }
 
+  export type DocumentWhereInput = {
+    AND?: DocumentWhereInput | DocumentWhereInput[]
+    OR?: DocumentWhereInput[]
+    NOT?: DocumentWhereInput | DocumentWhereInput[]
+    id?: StringFilter<"Document"> | string
+    proposalId?: StringFilter<"Document"> | string
+    name?: StringFilter<"Document"> | string
+    filename?: StringFilter<"Document"> | string
+    url?: StringFilter<"Document"> | string
+    size?: IntNullableFilter<"Document"> | number | null
+    uploadedAt?: DateTimeFilter<"Document"> | Date | string
+    verified?: BoolFilter<"Document"> | boolean
+    verifiedAt?: DateTimeNullableFilter<"Document"> | Date | string | null
+    verifiedBy?: StringNullableFilter<"Document"> | string | null
+    proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
+  }
+
+  export type DocumentOrderByWithRelationInput = {
+    id?: SortOrder
+    proposalId?: SortOrder
+    name?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    size?: SortOrderInput | SortOrder
+    uploadedAt?: SortOrder
+    verified?: SortOrder
+    verifiedAt?: SortOrderInput | SortOrder
+    verifiedBy?: SortOrderInput | SortOrder
+    proposal?: ProposalOrderByWithRelationInput
+  }
+
+  export type DocumentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DocumentWhereInput | DocumentWhereInput[]
+    OR?: DocumentWhereInput[]
+    NOT?: DocumentWhereInput | DocumentWhereInput[]
+    proposalId?: StringFilter<"Document"> | string
+    name?: StringFilter<"Document"> | string
+    filename?: StringFilter<"Document"> | string
+    url?: StringFilter<"Document"> | string
+    size?: IntNullableFilter<"Document"> | number | null
+    uploadedAt?: DateTimeFilter<"Document"> | Date | string
+    verified?: BoolFilter<"Document"> | boolean
+    verifiedAt?: DateTimeNullableFilter<"Document"> | Date | string | null
+    verifiedBy?: StringNullableFilter<"Document"> | string | null
+    proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
+  }, "id">
+
+  export type DocumentOrderByWithAggregationInput = {
+    id?: SortOrder
+    proposalId?: SortOrder
+    name?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    size?: SortOrderInput | SortOrder
+    uploadedAt?: SortOrder
+    verified?: SortOrder
+    verifiedAt?: SortOrderInput | SortOrder
+    verifiedBy?: SortOrderInput | SortOrder
+    _count?: DocumentCountOrderByAggregateInput
+    _avg?: DocumentAvgOrderByAggregateInput
+    _max?: DocumentMaxOrderByAggregateInput
+    _min?: DocumentMinOrderByAggregateInput
+    _sum?: DocumentSumOrderByAggregateInput
+  }
+
+  export type DocumentScalarWhereWithAggregatesInput = {
+    AND?: DocumentScalarWhereWithAggregatesInput | DocumentScalarWhereWithAggregatesInput[]
+    OR?: DocumentScalarWhereWithAggregatesInput[]
+    NOT?: DocumentScalarWhereWithAggregatesInput | DocumentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Document"> | string
+    proposalId?: StringWithAggregatesFilter<"Document"> | string
+    name?: StringWithAggregatesFilter<"Document"> | string
+    filename?: StringWithAggregatesFilter<"Document"> | string
+    url?: StringWithAggregatesFilter<"Document"> | string
+    size?: IntNullableWithAggregatesFilter<"Document"> | number | null
+    uploadedAt?: DateTimeWithAggregatesFilter<"Document"> | Date | string
+    verified?: BoolWithAggregatesFilter<"Document"> | boolean
+    verifiedAt?: DateTimeNullableWithAggregatesFilter<"Document"> | Date | string | null
+    verifiedBy?: StringNullableWithAggregatesFilter<"Document"> | string | null
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -7837,9 +9240,9 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    organization?: OrganizationCreateNestedOneWithoutUsersInput
-    proposals?: ProposalCreateNestedManyWithoutAuthorInput
     comments?: CommentCreateNestedManyWithoutUserInput
+    proposals?: ProposalCreateNestedManyWithoutAuthorInput
+    organization?: OrganizationCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7851,8 +9254,8 @@ export namespace Prisma {
     organizationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    proposals?: ProposalUncheckedCreateNestedManyWithoutAuthorInput
     comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    proposals?: ProposalUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUpdateInput = {
@@ -7863,9 +9266,9 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    organization?: OrganizationUpdateOneWithoutUsersNestedInput
-    proposals?: ProposalUpdateManyWithoutAuthorNestedInput
     comments?: CommentUpdateManyWithoutUserNestedInput
+    proposals?: ProposalUpdateManyWithoutAuthorNestedInput
+    organization?: OrganizationUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7877,8 +9280,8 @@ export namespace Prisma {
     organizationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    proposals?: ProposalUncheckedUpdateManyWithoutAuthorNestedInput
     comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    proposals?: ProposalUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7927,8 +9330,8 @@ export namespace Prisma {
     verified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserCreateNestedManyWithoutOrganizationInput
     proposals?: ProposalCreateNestedManyWithoutOrgInput
+    users?: UserCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUncheckedCreateInput = {
@@ -7945,8 +9348,8 @@ export namespace Prisma {
     verified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    users?: UserUncheckedCreateNestedManyWithoutOrganizationInput
     proposals?: ProposalUncheckedCreateNestedManyWithoutOrgInput
+    users?: UserUncheckedCreateNestedManyWithoutOrganizationInput
   }
 
   export type OrganizationUpdateInput = {
@@ -7963,8 +9366,8 @@ export namespace Prisma {
     verified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUpdateManyWithoutOrganizationNestedInput
     proposals?: ProposalUpdateManyWithoutOrgNestedInput
+    users?: UserUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationUncheckedUpdateInput = {
@@ -7981,8 +9384,8 @@ export namespace Prisma {
     verified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUncheckedUpdateManyWithoutOrganizationNestedInput
     proposals?: ProposalUncheckedUpdateManyWithoutOrgNestedInput
+    users?: UserUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
   export type OrganizationCreateManyInput = {
@@ -8093,10 +9496,12 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    org?: OrganizationCreateNestedOneWithoutProposalsInput
-    author: UserCreateNestedOneWithoutProposalsInput
-    category?: CategoryCreateNestedOneWithoutProposalsInput
+    referenceNumber?: string | null
     comments?: CommentCreateNestedManyWithoutProposalInput
+    documents?: DocumentCreateNestedManyWithoutProposalInput
+    category?: CategoryCreateNestedOneWithoutProposalsInput
+    author: UserCreateNestedOneWithoutProposalsInput
+    org?: OrganizationCreateNestedOneWithoutProposalsInput
   }
 
   export type ProposalUncheckedCreateInput = {
@@ -8116,7 +9521,9 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutProposalInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProposalUpdateInput = {
@@ -8133,10 +9540,12 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    org?: OrganizationUpdateOneWithoutProposalsNestedInput
-    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
-    category?: CategoryUpdateOneWithoutProposalsNestedInput
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUpdateManyWithoutProposalNestedInput
+    category?: CategoryUpdateOneWithoutProposalsNestedInput
+    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
+    org?: OrganizationUpdateOneWithoutProposalsNestedInput
   }
 
   export type ProposalUncheckedUpdateInput = {
@@ -8156,7 +9565,9 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutProposalNestedInput
   }
 
   export type ProposalCreateManyInput = {
@@ -8176,6 +9587,7 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
   }
 
   export type ProposalUpdateManyMutationInput = {
@@ -8192,6 +9604,7 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProposalUncheckedUpdateManyInput = {
@@ -8211,14 +9624,15 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CommentCreateInput = {
     id?: string
     body: string
     createdAt?: Date | string
-    proposal: ProposalCreateNestedOneWithoutCommentsInput
     user: UserCreateNestedOneWithoutCommentsInput
+    proposal: ProposalCreateNestedOneWithoutCommentsInput
   }
 
   export type CommentUncheckedCreateInput = {
@@ -8233,8 +9647,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    proposal?: ProposalUpdateOneRequiredWithoutCommentsNestedInput
     user?: UserUpdateOneRequiredWithoutCommentsNestedInput
+    proposal?: ProposalUpdateOneRequiredWithoutCommentsNestedInput
   }
 
   export type CommentUncheckedUpdateInput = {
@@ -8265,6 +9679,96 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentCreateInput = {
+    id?: string
+    name: string
+    filename: string
+    url: string
+    size?: number | null
+    uploadedAt?: Date | string
+    verified?: boolean
+    verifiedAt?: Date | string | null
+    verifiedBy?: string | null
+    proposal: ProposalCreateNestedOneWithoutDocumentsInput
+  }
+
+  export type DocumentUncheckedCreateInput = {
+    id?: string
+    proposalId: string
+    name: string
+    filename: string
+    url: string
+    size?: number | null
+    uploadedAt?: Date | string
+    verified?: boolean
+    verifiedAt?: Date | string | null
+    verifiedBy?: string | null
+  }
+
+  export type DocumentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    proposal?: ProposalUpdateOneRequiredWithoutDocumentsNestedInput
+  }
+
+  export type DocumentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proposalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DocumentCreateManyInput = {
+    id?: string
+    proposalId: string
+    name: string
+    filename: string
+    url: string
+    size?: number | null
+    uploadedAt?: Date | string
+    verified?: boolean
+    verifiedAt?: Date | string | null
+    verifiedBy?: string | null
+  }
+
+  export type DocumentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DocumentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proposalId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -8313,9 +9817,10 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type OrganizationNullableScalarRelationFilter = {
-    is?: OrganizationWhereInput | null
-    isNot?: OrganizationWhereInput | null
+  export type CommentListRelationFilter = {
+    every?: CommentWhereInput
+    some?: CommentWhereInput
+    none?: CommentWhereInput
   }
 
   export type ProposalListRelationFilter = {
@@ -8324,10 +9829,9 @@ export namespace Prisma {
     none?: ProposalWhereInput
   }
 
-  export type CommentListRelationFilter = {
-    every?: CommentWhereInput
-    some?: CommentWhereInput
-    none?: CommentWhereInput
+  export type OrganizationNullableScalarRelationFilter = {
+    is?: OrganizationWhereInput | null
+    isNot?: OrganizationWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -8335,11 +9839,11 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type ProposalOrderByRelationAggregateInput = {
+  export type CommentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type CommentOrderByRelationAggregateInput = {
+  export type ProposalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8594,14 +10098,24 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type DocumentListRelationFilter = {
+    every?: DocumentWhereInput
+    some?: DocumentWhereInput
+    none?: DocumentWhereInput
   }
 
   export type CategoryNullableScalarRelationFilter = {
     is?: CategoryWhereInput | null
     isNot?: CategoryWhereInput | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type DocumentOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ProposalCountOrderByAggregateInput = {
@@ -8621,6 +10135,7 @@ export namespace Prisma {
     statusNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    referenceNumber?: SortOrder
   }
 
   export type ProposalAvgOrderByAggregateInput = {
@@ -8643,6 +10158,7 @@ export namespace Prisma {
     statusNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    referenceNumber?: SortOrder
   }
 
   export type ProposalMinOrderByAggregateInput = {
@@ -8661,6 +10177,7 @@ export namespace Prisma {
     statusNote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    referenceNumber?: SortOrder
   }
 
   export type ProposalSumOrderByAggregateInput = {
@@ -8767,10 +10284,58 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type OrganizationCreateNestedOneWithoutUsersInput = {
-    create?: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
-    connectOrCreate?: OrganizationCreateOrConnectWithoutUsersInput
-    connect?: OrganizationWhereUniqueInput
+  export type DocumentCountOrderByAggregateInput = {
+    id?: SortOrder
+    proposalId?: SortOrder
+    name?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    size?: SortOrder
+    uploadedAt?: SortOrder
+    verified?: SortOrder
+    verifiedAt?: SortOrder
+    verifiedBy?: SortOrder
+  }
+
+  export type DocumentAvgOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type DocumentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    proposalId?: SortOrder
+    name?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    size?: SortOrder
+    uploadedAt?: SortOrder
+    verified?: SortOrder
+    verifiedAt?: SortOrder
+    verifiedBy?: SortOrder
+  }
+
+  export type DocumentMinOrderByAggregateInput = {
+    id?: SortOrder
+    proposalId?: SortOrder
+    name?: SortOrder
+    filename?: SortOrder
+    url?: SortOrder
+    size?: SortOrder
+    uploadedAt?: SortOrder
+    verified?: SortOrder
+    verifiedAt?: SortOrder
+    verifiedBy?: SortOrder
+  }
+
+  export type DocumentSumOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type CommentCreateNestedManyWithoutUserInput = {
+    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
+    createMany?: CommentCreateManyUserInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type ProposalCreateNestedManyWithoutAuthorInput = {
@@ -8780,7 +10345,13 @@ export namespace Prisma {
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
   }
 
-  export type CommentCreateNestedManyWithoutUserInput = {
+  export type OrganizationCreateNestedOneWithoutUsersInput = {
+    create?: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutUsersInput
+    connect?: OrganizationWhereUniqueInput
+  }
+
+  export type CommentUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
     createMany?: CommentCreateManyUserInputEnvelope
@@ -8792,13 +10363,6 @@ export namespace Prisma {
     connectOrCreate?: ProposalCreateOrConnectWithoutAuthorInput | ProposalCreateOrConnectWithoutAuthorInput[]
     createMany?: ProposalCreateManyAuthorInputEnvelope
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
-  }
-
-  export type CommentUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
-    createMany?: CommentCreateManyUserInputEnvelope
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8817,14 +10381,18 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type OrganizationUpdateOneWithoutUsersNestedInput = {
-    create?: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
-    connectOrCreate?: OrganizationCreateOrConnectWithoutUsersInput
-    upsert?: OrganizationUpsertWithoutUsersInput
-    disconnect?: OrganizationWhereInput | boolean
-    delete?: OrganizationWhereInput | boolean
-    connect?: OrganizationWhereUniqueInput
-    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutUsersInput, OrganizationUpdateWithoutUsersInput>, OrganizationUncheckedUpdateWithoutUsersInput>
+  export type CommentUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
+    upsert?: CommentUpsertWithWhereUniqueWithoutUserInput | CommentUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CommentCreateManyUserInputEnvelope
+    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+    update?: CommentUpdateWithWhereUniqueWithoutUserInput | CommentUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CommentUpdateManyWithWhereWithoutUserInput | CommentUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
   export type ProposalUpdateManyWithoutAuthorNestedInput = {
@@ -8841,7 +10409,17 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
-  export type CommentUpdateManyWithoutUserNestedInput = {
+  export type OrganizationUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutUsersInput
+    upsert?: OrganizationUpsertWithoutUsersInput
+    disconnect?: OrganizationWhereInput | boolean
+    delete?: OrganizationWhereInput | boolean
+    connect?: OrganizationWhereUniqueInput
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutUsersInput, OrganizationUpdateWithoutUsersInput>, OrganizationUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type CommentUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
     upsert?: CommentUpsertWithWhereUniqueWithoutUserInput | CommentUpsertWithWhereUniqueWithoutUserInput[]
@@ -8869,27 +10447,6 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
-  export type CommentUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput> | CommentCreateWithoutUserInput[] | CommentUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutUserInput | CommentCreateOrConnectWithoutUserInput[]
-    upsert?: CommentUpsertWithWhereUniqueWithoutUserInput | CommentUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: CommentCreateManyUserInputEnvelope
-    set?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    disconnect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    delete?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
-    update?: CommentUpdateWithWhereUniqueWithoutUserInput | CommentUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: CommentUpdateManyWithWhereWithoutUserInput | CommentUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
-  }
-
-  export type UserCreateNestedManyWithoutOrganizationInput = {
-    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
-    createMany?: UserCreateManyOrganizationInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
   export type ProposalCreateNestedManyWithoutOrgInput = {
     create?: XOR<ProposalCreateWithoutOrgInput, ProposalUncheckedCreateWithoutOrgInput> | ProposalCreateWithoutOrgInput[] | ProposalUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: ProposalCreateOrConnectWithoutOrgInput | ProposalCreateOrConnectWithoutOrgInput[]
@@ -8897,7 +10454,7 @@ export namespace Prisma {
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
   }
 
-  export type UserUncheckedCreateNestedManyWithoutOrganizationInput = {
+  export type UserCreateNestedManyWithoutOrganizationInput = {
     create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
     createMany?: UserCreateManyOrganizationInputEnvelope
@@ -8911,26 +10468,19 @@ export namespace Prisma {
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
   }
 
+  export type UserUncheckedCreateNestedManyWithoutOrganizationInput = {
+    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
+    createMany?: UserCreateManyOrganizationInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
   export type EnumOrgTypeFieldUpdateOperationsInput = {
     set?: $Enums.OrgType
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type UserUpdateManyWithoutOrganizationNestedInput = {
-    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutOrganizationInput | UserUpsertWithWhereUniqueWithoutOrganizationInput[]
-    createMany?: UserCreateManyOrganizationInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutOrganizationInput | UserUpdateWithWhereUniqueWithoutOrganizationInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutOrganizationInput | UserUpdateManyWithWhereWithoutOrganizationInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type ProposalUpdateManyWithoutOrgNestedInput = {
@@ -8947,7 +10497,7 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
-  export type UserUncheckedUpdateManyWithoutOrganizationNestedInput = {
+  export type UserUpdateManyWithoutOrganizationNestedInput = {
     create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
     connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
     upsert?: UserUpsertWithWhereUniqueWithoutOrganizationInput | UserUpsertWithWhereUniqueWithoutOrganizationInput[]
@@ -8973,6 +10523,20 @@ export namespace Prisma {
     update?: ProposalUpdateWithWhereUniqueWithoutOrgInput | ProposalUpdateWithWhereUniqueWithoutOrgInput[]
     updateMany?: ProposalUpdateManyWithWhereWithoutOrgInput | ProposalUpdateManyWithWhereWithoutOrgInput[]
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutOrganizationNestedInput = {
+    create?: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput> | UserCreateWithoutOrganizationInput[] | UserUncheckedCreateWithoutOrganizationInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutOrganizationInput | UserCreateOrConnectWithoutOrganizationInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutOrganizationInput | UserUpsertWithWhereUniqueWithoutOrganizationInput[]
+    createMany?: UserCreateManyOrganizationInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutOrganizationInput | UserUpdateWithWhereUniqueWithoutOrganizationInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutOrganizationInput | UserUpdateManyWithWhereWithoutOrganizationInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type ProposalCreateNestedManyWithoutCategoryInput = {
@@ -9017,16 +10581,18 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
-  export type OrganizationCreateNestedOneWithoutProposalsInput = {
-    create?: XOR<OrganizationCreateWithoutProposalsInput, OrganizationUncheckedCreateWithoutProposalsInput>
-    connectOrCreate?: OrganizationCreateOrConnectWithoutProposalsInput
-    connect?: OrganizationWhereUniqueInput
+  export type CommentCreateNestedManyWithoutProposalInput = {
+    create?: XOR<CommentCreateWithoutProposalInput, CommentUncheckedCreateWithoutProposalInput> | CommentCreateWithoutProposalInput[] | CommentUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: CommentCreateOrConnectWithoutProposalInput | CommentCreateOrConnectWithoutProposalInput[]
+    createMany?: CommentCreateManyProposalInputEnvelope
+    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
   }
 
-  export type UserCreateNestedOneWithoutProposalsInput = {
-    create?: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProposalsInput
-    connect?: UserWhereUniqueInput
+  export type DocumentCreateNestedManyWithoutProposalInput = {
+    create?: XOR<DocumentCreateWithoutProposalInput, DocumentUncheckedCreateWithoutProposalInput> | DocumentCreateWithoutProposalInput[] | DocumentUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutProposalInput | DocumentCreateOrConnectWithoutProposalInput[]
+    createMany?: DocumentCreateManyProposalInputEnvelope
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
   }
 
   export type CategoryCreateNestedOneWithoutProposalsInput = {
@@ -9035,11 +10601,16 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput
   }
 
-  export type CommentCreateNestedManyWithoutProposalInput = {
-    create?: XOR<CommentCreateWithoutProposalInput, CommentUncheckedCreateWithoutProposalInput> | CommentCreateWithoutProposalInput[] | CommentUncheckedCreateWithoutProposalInput[]
-    connectOrCreate?: CommentCreateOrConnectWithoutProposalInput | CommentCreateOrConnectWithoutProposalInput[]
-    createMany?: CommentCreateManyProposalInputEnvelope
-    connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutProposalsInput = {
+    create?: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProposalsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type OrganizationCreateNestedOneWithoutProposalsInput = {
+    create?: XOR<OrganizationCreateWithoutProposalsInput, OrganizationUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutProposalsInput
+    connect?: OrganizationWhereUniqueInput
   }
 
   export type CommentUncheckedCreateNestedManyWithoutProposalInput = {
@@ -9047,6 +10618,13 @@ export namespace Prisma {
     connectOrCreate?: CommentCreateOrConnectWithoutProposalInput | CommentCreateOrConnectWithoutProposalInput[]
     createMany?: CommentCreateManyProposalInputEnvelope
     connect?: CommentWhereUniqueInput | CommentWhereUniqueInput[]
+  }
+
+  export type DocumentUncheckedCreateNestedManyWithoutProposalInput = {
+    create?: XOR<DocumentCreateWithoutProposalInput, DocumentUncheckedCreateWithoutProposalInput> | DocumentCreateWithoutProposalInput[] | DocumentUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutProposalInput | DocumentCreateOrConnectWithoutProposalInput[]
+    createMany?: DocumentCreateManyProposalInputEnvelope
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
   }
 
   export type EnumProposalStatusFieldUpdateOperationsInput = {
@@ -9069,34 +10647,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type OrganizationUpdateOneWithoutProposalsNestedInput = {
-    create?: XOR<OrganizationCreateWithoutProposalsInput, OrganizationUncheckedCreateWithoutProposalsInput>
-    connectOrCreate?: OrganizationCreateOrConnectWithoutProposalsInput
-    upsert?: OrganizationUpsertWithoutProposalsInput
-    disconnect?: OrganizationWhereInput | boolean
-    delete?: OrganizationWhereInput | boolean
-    connect?: OrganizationWhereUniqueInput
-    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutProposalsInput, OrganizationUpdateWithoutProposalsInput>, OrganizationUncheckedUpdateWithoutProposalsInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutProposalsNestedInput = {
-    create?: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutProposalsInput
-    upsert?: UserUpsertWithoutProposalsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProposalsInput, UserUpdateWithoutProposalsInput>, UserUncheckedUpdateWithoutProposalsInput>
-  }
-
-  export type CategoryUpdateOneWithoutProposalsNestedInput = {
-    create?: XOR<CategoryCreateWithoutProposalsInput, CategoryUncheckedCreateWithoutProposalsInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutProposalsInput
-    upsert?: CategoryUpsertWithoutProposalsInput
-    disconnect?: CategoryWhereInput | boolean
-    delete?: CategoryWhereInput | boolean
-    connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProposalsInput, CategoryUpdateWithoutProposalsInput>, CategoryUncheckedUpdateWithoutProposalsInput>
-  }
-
   export type CommentUpdateManyWithoutProposalNestedInput = {
     create?: XOR<CommentCreateWithoutProposalInput, CommentUncheckedCreateWithoutProposalInput> | CommentCreateWithoutProposalInput[] | CommentUncheckedCreateWithoutProposalInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutProposalInput | CommentCreateOrConnectWithoutProposalInput[]
@@ -9109,6 +10659,48 @@ export namespace Prisma {
     update?: CommentUpdateWithWhereUniqueWithoutProposalInput | CommentUpdateWithWhereUniqueWithoutProposalInput[]
     updateMany?: CommentUpdateManyWithWhereWithoutProposalInput | CommentUpdateManyWithWhereWithoutProposalInput[]
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
+  }
+
+  export type DocumentUpdateManyWithoutProposalNestedInput = {
+    create?: XOR<DocumentCreateWithoutProposalInput, DocumentUncheckedCreateWithoutProposalInput> | DocumentCreateWithoutProposalInput[] | DocumentUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutProposalInput | DocumentCreateOrConnectWithoutProposalInput[]
+    upsert?: DocumentUpsertWithWhereUniqueWithoutProposalInput | DocumentUpsertWithWhereUniqueWithoutProposalInput[]
+    createMany?: DocumentCreateManyProposalInputEnvelope
+    set?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    disconnect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    delete?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    update?: DocumentUpdateWithWhereUniqueWithoutProposalInput | DocumentUpdateWithWhereUniqueWithoutProposalInput[]
+    updateMany?: DocumentUpdateManyWithWhereWithoutProposalInput | DocumentUpdateManyWithWhereWithoutProposalInput[]
+    deleteMany?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
+  }
+
+  export type CategoryUpdateOneWithoutProposalsNestedInput = {
+    create?: XOR<CategoryCreateWithoutProposalsInput, CategoryUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutProposalsInput
+    upsert?: CategoryUpsertWithoutProposalsInput
+    disconnect?: CategoryWhereInput | boolean
+    delete?: CategoryWhereInput | boolean
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutProposalsInput, CategoryUpdateWithoutProposalsInput>, CategoryUncheckedUpdateWithoutProposalsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutProposalsNestedInput = {
+    create?: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProposalsInput
+    upsert?: UserUpsertWithoutProposalsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProposalsInput, UserUpdateWithoutProposalsInput>, UserUncheckedUpdateWithoutProposalsInput>
+  }
+
+  export type OrganizationUpdateOneWithoutProposalsNestedInput = {
+    create?: XOR<OrganizationCreateWithoutProposalsInput, OrganizationUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: OrganizationCreateOrConnectWithoutProposalsInput
+    upsert?: OrganizationUpsertWithoutProposalsInput
+    disconnect?: OrganizationWhereInput | boolean
+    delete?: OrganizationWhereInput | boolean
+    connect?: OrganizationWhereUniqueInput
+    update?: XOR<XOR<OrganizationUpdateToOneWithWhereWithoutProposalsInput, OrganizationUpdateWithoutProposalsInput>, OrganizationUncheckedUpdateWithoutProposalsInput>
   }
 
   export type CommentUncheckedUpdateManyWithoutProposalNestedInput = {
@@ -9125,16 +10717,38 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
-  export type ProposalCreateNestedOneWithoutCommentsInput = {
-    create?: XOR<ProposalCreateWithoutCommentsInput, ProposalUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: ProposalCreateOrConnectWithoutCommentsInput
-    connect?: ProposalWhereUniqueInput
+  export type DocumentUncheckedUpdateManyWithoutProposalNestedInput = {
+    create?: XOR<DocumentCreateWithoutProposalInput, DocumentUncheckedCreateWithoutProposalInput> | DocumentCreateWithoutProposalInput[] | DocumentUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: DocumentCreateOrConnectWithoutProposalInput | DocumentCreateOrConnectWithoutProposalInput[]
+    upsert?: DocumentUpsertWithWhereUniqueWithoutProposalInput | DocumentUpsertWithWhereUniqueWithoutProposalInput[]
+    createMany?: DocumentCreateManyProposalInputEnvelope
+    set?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    disconnect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    delete?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    connect?: DocumentWhereUniqueInput | DocumentWhereUniqueInput[]
+    update?: DocumentUpdateWithWhereUniqueWithoutProposalInput | DocumentUpdateWithWhereUniqueWithoutProposalInput[]
+    updateMany?: DocumentUpdateManyWithWhereWithoutProposalInput | DocumentUpdateManyWithWhereWithoutProposalInput[]
+    deleteMany?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutCommentsInput = {
     create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type ProposalCreateNestedOneWithoutCommentsInput = {
+    create?: XOR<ProposalCreateWithoutCommentsInput, ProposalUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: ProposalCreateOrConnectWithoutCommentsInput
+    connect?: ProposalWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
+    create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
+    upsert?: UserUpsertWithoutCommentsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
   }
 
   export type ProposalUpdateOneRequiredWithoutCommentsNestedInput = {
@@ -9145,12 +10759,18 @@ export namespace Prisma {
     update?: XOR<XOR<ProposalUpdateToOneWithWhereWithoutCommentsInput, ProposalUpdateWithoutCommentsInput>, ProposalUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type UserUpdateOneRequiredWithoutCommentsNestedInput = {
-    create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
-    upsert?: UserUpsertWithoutCommentsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
+  export type ProposalCreateNestedOneWithoutDocumentsInput = {
+    create?: XOR<ProposalCreateWithoutDocumentsInput, ProposalUncheckedCreateWithoutDocumentsInput>
+    connectOrCreate?: ProposalCreateOrConnectWithoutDocumentsInput
+    connect?: ProposalWhereUniqueInput
+  }
+
+  export type ProposalUpdateOneRequiredWithoutDocumentsNestedInput = {
+    create?: XOR<ProposalCreateWithoutDocumentsInput, ProposalUncheckedCreateWithoutDocumentsInput>
+    connectOrCreate?: ProposalCreateOrConnectWithoutDocumentsInput
+    upsert?: ProposalUpsertWithoutDocumentsInput
+    connect?: ProposalWhereUniqueInput
+    update?: XOR<XOR<ProposalUpdateToOneWithWhereWithoutDocumentsInput, ProposalUpdateWithoutDocumentsInput>, ProposalUncheckedUpdateWithoutDocumentsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9413,6 +11033,80 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type CommentCreateWithoutUserInput = {
+    id?: string
+    body: string
+    createdAt?: Date | string
+    proposal: ProposalCreateNestedOneWithoutCommentsInput
+  }
+
+  export type CommentUncheckedCreateWithoutUserInput = {
+    id?: string
+    proposalId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type CommentCreateOrConnectWithoutUserInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
+  }
+
+  export type CommentCreateManyUserInputEnvelope = {
+    data: CommentCreateManyUserInput | CommentCreateManyUserInput[]
+  }
+
+  export type ProposalCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    slug: string
+    status?: $Enums.ProposalStatus
+    type?: $Enums.ProposalType | null
+    scheduledAt?: Date | string | null
+    location?: string | null
+    description?: string | null
+    budget?: number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referenceNumber?: string | null
+    comments?: CommentCreateNestedManyWithoutProposalInput
+    documents?: DocumentCreateNestedManyWithoutProposalInput
+    category?: CategoryCreateNestedOneWithoutProposalsInput
+    org?: OrganizationCreateNestedOneWithoutProposalsInput
+  }
+
+  export type ProposalUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    title: string
+    slug: string
+    orgId?: string | null
+    categoryId?: string | null
+    status?: $Enums.ProposalStatus
+    type?: $Enums.ProposalType | null
+    scheduledAt?: Date | string | null
+    location?: string | null
+    description?: string | null
+    budget?: number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referenceNumber?: string | null
+    comments?: CommentUncheckedCreateNestedManyWithoutProposalInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutProposalInput
+  }
+
+  export type ProposalCreateOrConnectWithoutAuthorInput = {
+    where: ProposalWhereUniqueInput
+    create: XOR<ProposalCreateWithoutAuthorInput, ProposalUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ProposalCreateManyAuthorInputEnvelope = {
+    data: ProposalCreateManyAuthorInput | ProposalCreateManyAuthorInput[]
+  }
+
   export type OrganizationCreateWithoutUsersInput = {
     id?: string
     name: string
@@ -9452,74 +11146,70 @@ export namespace Prisma {
     create: XOR<OrganizationCreateWithoutUsersInput, OrganizationUncheckedCreateWithoutUsersInput>
   }
 
-  export type ProposalCreateWithoutAuthorInput = {
-    id?: string
-    title: string
-    slug: string
-    status?: $Enums.ProposalStatus
-    type?: $Enums.ProposalType | null
-    scheduledAt?: Date | string | null
-    location?: string | null
-    description?: string | null
-    budget?: number | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    statusNote?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    org?: OrganizationCreateNestedOneWithoutProposalsInput
-    category?: CategoryCreateNestedOneWithoutProposalsInput
-    comments?: CommentCreateNestedManyWithoutProposalInput
-  }
-
-  export type ProposalUncheckedCreateWithoutAuthorInput = {
-    id?: string
-    title: string
-    slug: string
-    orgId?: string | null
-    categoryId?: string | null
-    status?: $Enums.ProposalStatus
-    type?: $Enums.ProposalType | null
-    scheduledAt?: Date | string | null
-    location?: string | null
-    description?: string | null
-    budget?: number | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    statusNote?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    comments?: CommentUncheckedCreateNestedManyWithoutProposalInput
-  }
-
-  export type ProposalCreateOrConnectWithoutAuthorInput = {
-    where: ProposalWhereUniqueInput
-    create: XOR<ProposalCreateWithoutAuthorInput, ProposalUncheckedCreateWithoutAuthorInput>
-  }
-
-  export type ProposalCreateManyAuthorInputEnvelope = {
-    data: ProposalCreateManyAuthorInput | ProposalCreateManyAuthorInput[]
-  }
-
-  export type CommentCreateWithoutUserInput = {
-    id?: string
-    body: string
-    createdAt?: Date | string
-    proposal: ProposalCreateNestedOneWithoutCommentsInput
-  }
-
-  export type CommentUncheckedCreateWithoutUserInput = {
-    id?: string
-    proposalId: string
-    body: string
-    createdAt?: Date | string
-  }
-
-  export type CommentCreateOrConnectWithoutUserInput = {
+  export type CommentUpsertWithWhereUniqueWithoutUserInput = {
     where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
     create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
   }
 
-  export type CommentCreateManyUserInputEnvelope = {
-    data: CommentCreateManyUserInput | CommentCreateManyUserInput[]
+  export type CommentUpdateWithWhereUniqueWithoutUserInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutUserInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CommentScalarWhereInput = {
+    AND?: CommentScalarWhereInput | CommentScalarWhereInput[]
+    OR?: CommentScalarWhereInput[]
+    NOT?: CommentScalarWhereInput | CommentScalarWhereInput[]
+    id?: StringFilter<"Comment"> | string
+    proposalId?: StringFilter<"Comment"> | string
+    userId?: StringFilter<"Comment"> | string
+    body?: StringFilter<"Comment"> | string
+    createdAt?: DateTimeFilter<"Comment"> | Date | string
+  }
+
+  export type ProposalUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: ProposalWhereUniqueInput
+    update: XOR<ProposalUpdateWithoutAuthorInput, ProposalUncheckedUpdateWithoutAuthorInput>
+    create: XOR<ProposalCreateWithoutAuthorInput, ProposalUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ProposalUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: ProposalWhereUniqueInput
+    data: XOR<ProposalUpdateWithoutAuthorInput, ProposalUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type ProposalUpdateManyWithWhereWithoutAuthorInput = {
+    where: ProposalScalarWhereInput
+    data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type ProposalScalarWhereInput = {
+    AND?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+    OR?: ProposalScalarWhereInput[]
+    NOT?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+    id?: StringFilter<"Proposal"> | string
+    title?: StringFilter<"Proposal"> | string
+    slug?: StringFilter<"Proposal"> | string
+    orgId?: StringNullableFilter<"Proposal"> | string | null
+    authorId?: StringFilter<"Proposal"> | string
+    categoryId?: StringNullableFilter<"Proposal"> | string | null
+    status?: EnumProposalStatusFilter<"Proposal"> | $Enums.ProposalStatus
+    type?: EnumProposalTypeNullableFilter<"Proposal"> | $Enums.ProposalType | null
+    scheduledAt?: DateTimeNullableFilter<"Proposal"> | Date | string | null
+    location?: StringNullableFilter<"Proposal"> | string | null
+    description?: StringNullableFilter<"Proposal"> | string | null
+    budget?: IntNullableFilter<"Proposal"> | number | null
+    attachments?: JsonNullableFilter<"Proposal">
+    statusNote?: StringNullableFilter<"Proposal"> | string | null
+    createdAt?: DateTimeFilter<"Proposal"> | Date | string
+    updatedAt?: DateTimeFilter<"Proposal"> | Date | string
+    referenceNumber?: StringNullableFilter<"Proposal"> | string | null
   }
 
   export type OrganizationUpsertWithoutUsersInput = {
@@ -9567,104 +11257,6 @@ export namespace Prisma {
     proposals?: ProposalUncheckedUpdateManyWithoutOrgNestedInput
   }
 
-  export type ProposalUpsertWithWhereUniqueWithoutAuthorInput = {
-    where: ProposalWhereUniqueInput
-    update: XOR<ProposalUpdateWithoutAuthorInput, ProposalUncheckedUpdateWithoutAuthorInput>
-    create: XOR<ProposalCreateWithoutAuthorInput, ProposalUncheckedCreateWithoutAuthorInput>
-  }
-
-  export type ProposalUpdateWithWhereUniqueWithoutAuthorInput = {
-    where: ProposalWhereUniqueInput
-    data: XOR<ProposalUpdateWithoutAuthorInput, ProposalUncheckedUpdateWithoutAuthorInput>
-  }
-
-  export type ProposalUpdateManyWithWhereWithoutAuthorInput = {
-    where: ProposalScalarWhereInput
-    data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutAuthorInput>
-  }
-
-  export type ProposalScalarWhereInput = {
-    AND?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
-    OR?: ProposalScalarWhereInput[]
-    NOT?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
-    id?: StringFilter<"Proposal"> | string
-    title?: StringFilter<"Proposal"> | string
-    slug?: StringFilter<"Proposal"> | string
-    orgId?: StringNullableFilter<"Proposal"> | string | null
-    authorId?: StringFilter<"Proposal"> | string
-    categoryId?: StringNullableFilter<"Proposal"> | string | null
-    status?: EnumProposalStatusFilter<"Proposal"> | $Enums.ProposalStatus
-    type?: EnumProposalTypeNullableFilter<"Proposal"> | $Enums.ProposalType | null
-    scheduledAt?: DateTimeNullableFilter<"Proposal"> | Date | string | null
-    location?: StringNullableFilter<"Proposal"> | string | null
-    description?: StringNullableFilter<"Proposal"> | string | null
-    budget?: IntNullableFilter<"Proposal"> | number | null
-    attachments?: JsonNullableFilter<"Proposal">
-    statusNote?: StringNullableFilter<"Proposal"> | string | null
-    createdAt?: DateTimeFilter<"Proposal"> | Date | string
-    updatedAt?: DateTimeFilter<"Proposal"> | Date | string
-  }
-
-  export type CommentUpsertWithWhereUniqueWithoutUserInput = {
-    where: CommentWhereUniqueInput
-    update: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
-    create: XOR<CommentCreateWithoutUserInput, CommentUncheckedCreateWithoutUserInput>
-  }
-
-  export type CommentUpdateWithWhereUniqueWithoutUserInput = {
-    where: CommentWhereUniqueInput
-    data: XOR<CommentUpdateWithoutUserInput, CommentUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CommentUpdateManyWithWhereWithoutUserInput = {
-    where: CommentScalarWhereInput
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type CommentScalarWhereInput = {
-    AND?: CommentScalarWhereInput | CommentScalarWhereInput[]
-    OR?: CommentScalarWhereInput[]
-    NOT?: CommentScalarWhereInput | CommentScalarWhereInput[]
-    id?: StringFilter<"Comment"> | string
-    proposalId?: StringFilter<"Comment"> | string
-    userId?: StringFilter<"Comment"> | string
-    body?: StringFilter<"Comment"> | string
-    createdAt?: DateTimeFilter<"Comment"> | Date | string
-  }
-
-  export type UserCreateWithoutOrganizationInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    proposals?: ProposalCreateNestedManyWithoutAuthorInput
-    comments?: CommentCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutOrganizationInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    proposals?: ProposalUncheckedCreateNestedManyWithoutAuthorInput
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutOrganizationInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput>
-  }
-
-  export type UserCreateManyOrganizationInputEnvelope = {
-    data: UserCreateManyOrganizationInput | UserCreateManyOrganizationInput[]
-  }
-
   export type ProposalCreateWithoutOrgInput = {
     id?: string
     title: string
@@ -9679,9 +11271,11 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    author: UserCreateNestedOneWithoutProposalsInput
-    category?: CategoryCreateNestedOneWithoutProposalsInput
+    referenceNumber?: string | null
     comments?: CommentCreateNestedManyWithoutProposalInput
+    documents?: DocumentCreateNestedManyWithoutProposalInput
+    category?: CategoryCreateNestedOneWithoutProposalsInput
+    author: UserCreateNestedOneWithoutProposalsInput
   }
 
   export type ProposalUncheckedCreateWithoutOrgInput = {
@@ -9700,7 +11294,9 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutProposalInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProposalCreateOrConnectWithoutOrgInput = {
@@ -9710,6 +11306,55 @@ export namespace Prisma {
 
   export type ProposalCreateManyOrgInputEnvelope = {
     data: ProposalCreateManyOrgInput | ProposalCreateManyOrgInput[]
+  }
+
+  export type UserCreateWithoutOrganizationInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: CommentCreateNestedManyWithoutUserInput
+    proposals?: ProposalCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutOrganizationInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+    proposals?: ProposalUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutOrganizationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOrganizationInput, UserUncheckedCreateWithoutOrganizationInput>
+  }
+
+  export type UserCreateManyOrganizationInputEnvelope = {
+    data: UserCreateManyOrganizationInput | UserCreateManyOrganizationInput[]
+  }
+
+  export type ProposalUpsertWithWhereUniqueWithoutOrgInput = {
+    where: ProposalWhereUniqueInput
+    update: XOR<ProposalUpdateWithoutOrgInput, ProposalUncheckedUpdateWithoutOrgInput>
+    create: XOR<ProposalCreateWithoutOrgInput, ProposalUncheckedCreateWithoutOrgInput>
+  }
+
+  export type ProposalUpdateWithWhereUniqueWithoutOrgInput = {
+    where: ProposalWhereUniqueInput
+    data: XOR<ProposalUpdateWithoutOrgInput, ProposalUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type ProposalUpdateManyWithWhereWithoutOrgInput = {
+    where: ProposalScalarWhereInput
+    data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutOrgInput>
   }
 
   export type UserUpsertWithWhereUniqueWithoutOrganizationInput = {
@@ -9742,22 +11387,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
-  export type ProposalUpsertWithWhereUniqueWithoutOrgInput = {
-    where: ProposalWhereUniqueInput
-    update: XOR<ProposalUpdateWithoutOrgInput, ProposalUncheckedUpdateWithoutOrgInput>
-    create: XOR<ProposalCreateWithoutOrgInput, ProposalUncheckedCreateWithoutOrgInput>
-  }
-
-  export type ProposalUpdateWithWhereUniqueWithoutOrgInput = {
-    where: ProposalWhereUniqueInput
-    data: XOR<ProposalUpdateWithoutOrgInput, ProposalUncheckedUpdateWithoutOrgInput>
-  }
-
-  export type ProposalUpdateManyWithWhereWithoutOrgInput = {
-    where: ProposalScalarWhereInput
-    data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutOrgInput>
-  }
-
   export type ProposalCreateWithoutCategoryInput = {
     id?: string
     title: string
@@ -9772,9 +11401,11 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    org?: OrganizationCreateNestedOneWithoutProposalsInput
-    author: UserCreateNestedOneWithoutProposalsInput
+    referenceNumber?: string | null
     comments?: CommentCreateNestedManyWithoutProposalInput
+    documents?: DocumentCreateNestedManyWithoutProposalInput
+    author: UserCreateNestedOneWithoutProposalsInput
+    org?: OrganizationCreateNestedOneWithoutProposalsInput
   }
 
   export type ProposalUncheckedCreateWithoutCategoryInput = {
@@ -9793,7 +11424,9 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
     comments?: CommentUncheckedCreateNestedManyWithoutProposalInput
+    documents?: DocumentUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProposalCreateOrConnectWithoutCategoryInput = {
@@ -9819,6 +11452,108 @@ export namespace Prisma {
   export type ProposalUpdateManyWithWhereWithoutCategoryInput = {
     where: ProposalScalarWhereInput
     data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type CommentCreateWithoutProposalInput = {
+    id?: string
+    body: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutCommentsInput
+  }
+
+  export type CommentUncheckedCreateWithoutProposalInput = {
+    id?: string
+    userId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type CommentCreateOrConnectWithoutProposalInput = {
+    where: CommentWhereUniqueInput
+    create: XOR<CommentCreateWithoutProposalInput, CommentUncheckedCreateWithoutProposalInput>
+  }
+
+  export type CommentCreateManyProposalInputEnvelope = {
+    data: CommentCreateManyProposalInput | CommentCreateManyProposalInput[]
+  }
+
+  export type DocumentCreateWithoutProposalInput = {
+    id?: string
+    name: string
+    filename: string
+    url: string
+    size?: number | null
+    uploadedAt?: Date | string
+    verified?: boolean
+    verifiedAt?: Date | string | null
+    verifiedBy?: string | null
+  }
+
+  export type DocumentUncheckedCreateWithoutProposalInput = {
+    id?: string
+    name: string
+    filename: string
+    url: string
+    size?: number | null
+    uploadedAt?: Date | string
+    verified?: boolean
+    verifiedAt?: Date | string | null
+    verifiedBy?: string | null
+  }
+
+  export type DocumentCreateOrConnectWithoutProposalInput = {
+    where: DocumentWhereUniqueInput
+    create: XOR<DocumentCreateWithoutProposalInput, DocumentUncheckedCreateWithoutProposalInput>
+  }
+
+  export type DocumentCreateManyProposalInputEnvelope = {
+    data: DocumentCreateManyProposalInput | DocumentCreateManyProposalInput[]
+  }
+
+  export type CategoryCreateWithoutProposalsInput = {
+    id?: string
+    name: string
+    slug: string
+  }
+
+  export type CategoryUncheckedCreateWithoutProposalsInput = {
+    id?: string
+    name: string
+    slug: string
+  }
+
+  export type CategoryCreateOrConnectWithoutProposalsInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutProposalsInput, CategoryUncheckedCreateWithoutProposalsInput>
+  }
+
+  export type UserCreateWithoutProposalsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: CommentCreateNestedManyWithoutUserInput
+    organization?: OrganizationCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserUncheckedCreateWithoutProposalsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    organizationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutProposalsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
   }
 
   export type OrganizationCreateWithoutProposalsInput = {
@@ -9860,73 +11595,110 @@ export namespace Prisma {
     create: XOR<OrganizationCreateWithoutProposalsInput, OrganizationUncheckedCreateWithoutProposalsInput>
   }
 
-  export type UserCreateWithoutProposalsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    organization?: OrganizationCreateNestedOneWithoutUsersInput
-    comments?: CommentCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutProposalsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    organizationId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    comments?: CommentUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutProposalsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
-  }
-
-  export type CategoryCreateWithoutProposalsInput = {
-    id?: string
-    name: string
-    slug: string
-  }
-
-  export type CategoryUncheckedCreateWithoutProposalsInput = {
-    id?: string
-    name: string
-    slug: string
-  }
-
-  export type CategoryCreateOrConnectWithoutProposalsInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutProposalsInput, CategoryUncheckedCreateWithoutProposalsInput>
-  }
-
-  export type CommentCreateWithoutProposalInput = {
-    id?: string
-    body: string
-    createdAt?: Date | string
-    user: UserCreateNestedOneWithoutCommentsInput
-  }
-
-  export type CommentUncheckedCreateWithoutProposalInput = {
-    id?: string
-    userId: string
-    body: string
-    createdAt?: Date | string
-  }
-
-  export type CommentCreateOrConnectWithoutProposalInput = {
+  export type CommentUpsertWithWhereUniqueWithoutProposalInput = {
     where: CommentWhereUniqueInput
+    update: XOR<CommentUpdateWithoutProposalInput, CommentUncheckedUpdateWithoutProposalInput>
     create: XOR<CommentCreateWithoutProposalInput, CommentUncheckedCreateWithoutProposalInput>
   }
 
-  export type CommentCreateManyProposalInputEnvelope = {
-    data: CommentCreateManyProposalInput | CommentCreateManyProposalInput[]
+  export type CommentUpdateWithWhereUniqueWithoutProposalInput = {
+    where: CommentWhereUniqueInput
+    data: XOR<CommentUpdateWithoutProposalInput, CommentUncheckedUpdateWithoutProposalInput>
+  }
+
+  export type CommentUpdateManyWithWhereWithoutProposalInput = {
+    where: CommentScalarWhereInput
+    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutProposalInput>
+  }
+
+  export type DocumentUpsertWithWhereUniqueWithoutProposalInput = {
+    where: DocumentWhereUniqueInput
+    update: XOR<DocumentUpdateWithoutProposalInput, DocumentUncheckedUpdateWithoutProposalInput>
+    create: XOR<DocumentCreateWithoutProposalInput, DocumentUncheckedCreateWithoutProposalInput>
+  }
+
+  export type DocumentUpdateWithWhereUniqueWithoutProposalInput = {
+    where: DocumentWhereUniqueInput
+    data: XOR<DocumentUpdateWithoutProposalInput, DocumentUncheckedUpdateWithoutProposalInput>
+  }
+
+  export type DocumentUpdateManyWithWhereWithoutProposalInput = {
+    where: DocumentScalarWhereInput
+    data: XOR<DocumentUpdateManyMutationInput, DocumentUncheckedUpdateManyWithoutProposalInput>
+  }
+
+  export type DocumentScalarWhereInput = {
+    AND?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
+    OR?: DocumentScalarWhereInput[]
+    NOT?: DocumentScalarWhereInput | DocumentScalarWhereInput[]
+    id?: StringFilter<"Document"> | string
+    proposalId?: StringFilter<"Document"> | string
+    name?: StringFilter<"Document"> | string
+    filename?: StringFilter<"Document"> | string
+    url?: StringFilter<"Document"> | string
+    size?: IntNullableFilter<"Document"> | number | null
+    uploadedAt?: DateTimeFilter<"Document"> | Date | string
+    verified?: BoolFilter<"Document"> | boolean
+    verifiedAt?: DateTimeNullableFilter<"Document"> | Date | string | null
+    verifiedBy?: StringNullableFilter<"Document"> | string | null
+  }
+
+  export type CategoryUpsertWithoutProposalsInput = {
+    update: XOR<CategoryUpdateWithoutProposalsInput, CategoryUncheckedUpdateWithoutProposalsInput>
+    create: XOR<CategoryCreateWithoutProposalsInput, CategoryUncheckedCreateWithoutProposalsInput>
+    where?: CategoryWhereInput
+  }
+
+  export type CategoryUpdateToOneWithWhereWithoutProposalsInput = {
+    where?: CategoryWhereInput
+    data: XOR<CategoryUpdateWithoutProposalsInput, CategoryUncheckedUpdateWithoutProposalsInput>
+  }
+
+  export type CategoryUpdateWithoutProposalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CategoryUncheckedUpdateWithoutProposalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutProposalsInput = {
+    update: XOR<UserUpdateWithoutProposalsInput, UserUncheckedUpdateWithoutProposalsInput>
+    create: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProposalsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProposalsInput, UserUncheckedUpdateWithoutProposalsInput>
+  }
+
+  export type UserUpdateWithoutProposalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    organization?: OrganizationUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProposalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type OrganizationUpsertWithoutProposalsInput = {
@@ -9974,78 +11746,33 @@ export namespace Prisma {
     users?: UserUncheckedUpdateManyWithoutOrganizationNestedInput
   }
 
-  export type UserUpsertWithoutProposalsInput = {
-    update: XOR<UserUpdateWithoutProposalsInput, UserUncheckedUpdateWithoutProposalsInput>
-    create: XOR<UserCreateWithoutProposalsInput, UserUncheckedCreateWithoutProposalsInput>
-    where?: UserWhereInput
+  export type UserCreateWithoutCommentsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    proposals?: ProposalCreateNestedManyWithoutAuthorInput
+    organization?: OrganizationCreateNestedOneWithoutUsersInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutProposalsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutProposalsInput, UserUncheckedUpdateWithoutProposalsInput>
+  export type UserUncheckedCreateWithoutCommentsInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    organizationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    proposals?: ProposalUncheckedCreateNestedManyWithoutAuthorInput
   }
 
-  export type UserUpdateWithoutProposalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    organization?: OrganizationUpdateOneWithoutUsersNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutProposalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type CategoryUpsertWithoutProposalsInput = {
-    update: XOR<CategoryUpdateWithoutProposalsInput, CategoryUncheckedUpdateWithoutProposalsInput>
-    create: XOR<CategoryCreateWithoutProposalsInput, CategoryUncheckedCreateWithoutProposalsInput>
-    where?: CategoryWhereInput
-  }
-
-  export type CategoryUpdateToOneWithWhereWithoutProposalsInput = {
-    where?: CategoryWhereInput
-    data: XOR<CategoryUpdateWithoutProposalsInput, CategoryUncheckedUpdateWithoutProposalsInput>
-  }
-
-  export type CategoryUpdateWithoutProposalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CategoryUncheckedUpdateWithoutProposalsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type CommentUpsertWithWhereUniqueWithoutProposalInput = {
-    where: CommentWhereUniqueInput
-    update: XOR<CommentUpdateWithoutProposalInput, CommentUncheckedUpdateWithoutProposalInput>
-    create: XOR<CommentCreateWithoutProposalInput, CommentUncheckedCreateWithoutProposalInput>
-  }
-
-  export type CommentUpdateWithWhereUniqueWithoutProposalInput = {
-    where: CommentWhereUniqueInput
-    data: XOR<CommentUpdateWithoutProposalInput, CommentUncheckedUpdateWithoutProposalInput>
-  }
-
-  export type CommentUpdateManyWithWhereWithoutProposalInput = {
-    where: CommentScalarWhereInput
-    data: XOR<CommentUpdateManyMutationInput, CommentUncheckedUpdateManyWithoutProposalInput>
+  export type UserCreateOrConnectWithoutCommentsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
   }
 
   export type ProposalCreateWithoutCommentsInput = {
@@ -10062,9 +11789,11 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    org?: OrganizationCreateNestedOneWithoutProposalsInput
-    author: UserCreateNestedOneWithoutProposalsInput
+    referenceNumber?: string | null
+    documents?: DocumentCreateNestedManyWithoutProposalInput
     category?: CategoryCreateNestedOneWithoutProposalsInput
+    author: UserCreateNestedOneWithoutProposalsInput
+    org?: OrganizationCreateNestedOneWithoutProposalsInput
   }
 
   export type ProposalUncheckedCreateWithoutCommentsInput = {
@@ -10084,6 +11813,8 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
+    documents?: DocumentUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProposalCreateOrConnectWithoutCommentsInput = {
@@ -10091,33 +11822,39 @@ export namespace Prisma {
     create: XOR<ProposalCreateWithoutCommentsInput, ProposalUncheckedCreateWithoutCommentsInput>
   }
 
-  export type UserCreateWithoutCommentsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    organization?: OrganizationCreateNestedOneWithoutUsersInput
-    proposals?: ProposalCreateNestedManyWithoutAuthorInput
-  }
-
-  export type UserUncheckedCreateWithoutCommentsInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    organizationId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    proposals?: ProposalUncheckedCreateNestedManyWithoutAuthorInput
-  }
-
-  export type UserCreateOrConnectWithoutCommentsInput = {
-    where: UserWhereUniqueInput
+  export type UserUpsertWithoutCommentsInput = {
+    update: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
     create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCommentsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
+  }
+
+  export type UserUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    proposals?: ProposalUpdateManyWithoutAuthorNestedInput
+    organization?: OrganizationUpdateOneWithoutUsersNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCommentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    proposals?: ProposalUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type ProposalUpsertWithoutCommentsInput = {
@@ -10145,9 +11882,11 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    org?: OrganizationUpdateOneWithoutProposalsNestedInput
-    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    documents?: DocumentUpdateManyWithoutProposalNestedInput
     category?: CategoryUpdateOneWithoutProposalsNestedInput
+    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
+    org?: OrganizationUpdateOneWithoutProposalsNestedInput
   }
 
   export type ProposalUncheckedUpdateWithoutCommentsInput = {
@@ -10167,41 +11906,115 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    documents?: DocumentUncheckedUpdateManyWithoutProposalNestedInput
   }
 
-  export type UserUpsertWithoutCommentsInput = {
-    update: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
-    create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
-    where?: UserWhereInput
+  export type ProposalCreateWithoutDocumentsInput = {
+    id?: string
+    title: string
+    slug: string
+    status?: $Enums.ProposalStatus
+    type?: $Enums.ProposalType | null
+    scheduledAt?: Date | string | null
+    location?: string | null
+    description?: string | null
+    budget?: number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referenceNumber?: string | null
+    comments?: CommentCreateNestedManyWithoutProposalInput
+    category?: CategoryCreateNestedOneWithoutProposalsInput
+    author: UserCreateNestedOneWithoutProposalsInput
+    org?: OrganizationCreateNestedOneWithoutProposalsInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutCommentsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
+  export type ProposalUncheckedCreateWithoutDocumentsInput = {
+    id?: string
+    title: string
+    slug: string
+    orgId?: string | null
+    authorId: string
+    categoryId?: string | null
+    status?: $Enums.ProposalStatus
+    type?: $Enums.ProposalType | null
+    scheduledAt?: Date | string | null
+    location?: string | null
+    description?: string | null
+    budget?: number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    referenceNumber?: string | null
+    comments?: CommentUncheckedCreateNestedManyWithoutProposalInput
   }
 
-  export type UserUpdateWithoutCommentsInput = {
+  export type ProposalCreateOrConnectWithoutDocumentsInput = {
+    where: ProposalWhereUniqueInput
+    create: XOR<ProposalCreateWithoutDocumentsInput, ProposalUncheckedCreateWithoutDocumentsInput>
+  }
+
+  export type ProposalUpsertWithoutDocumentsInput = {
+    update: XOR<ProposalUpdateWithoutDocumentsInput, ProposalUncheckedUpdateWithoutDocumentsInput>
+    create: XOR<ProposalCreateWithoutDocumentsInput, ProposalUncheckedCreateWithoutDocumentsInput>
+    where?: ProposalWhereInput
+  }
+
+  export type ProposalUpdateToOneWithWhereWithoutDocumentsInput = {
+    where?: ProposalWhereInput
+    data: XOR<ProposalUpdateWithoutDocumentsInput, ProposalUncheckedUpdateWithoutDocumentsInput>
+  }
+
+  export type ProposalUpdateWithoutDocumentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableIntFieldUpdateOperationsInput | number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    organization?: OrganizationUpdateOneWithoutUsersNestedInput
-    proposals?: ProposalUpdateManyWithoutAuthorNestedInput
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUpdateManyWithoutProposalNestedInput
+    category?: CategoryUpdateOneWithoutProposalsNestedInput
+    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
+    org?: OrganizationUpdateOneWithoutProposalsNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutCommentsInput = {
+  export type ProposalUncheckedUpdateWithoutDocumentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: StringFieldUpdateOperationsInput | string
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableIntFieldUpdateOperationsInput | number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    proposals?: ProposalUncheckedUpdateManyWithoutAuthorNestedInput
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUncheckedUpdateManyWithoutProposalNestedInput
+  }
+
+  export type CommentCreateManyUserInput = {
+    id?: string
+    proposalId: string
+    body: string
+    createdAt?: Date | string
   }
 
   export type ProposalCreateManyAuthorInput = {
@@ -10220,69 +12033,7 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-  }
-
-  export type CommentCreateManyUserInput = {
-    id?: string
-    proposalId: string
-    body: string
-    createdAt?: Date | string
-  }
-
-  export type ProposalUpdateWithoutAuthorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
-    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
-    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    budget?: NullableIntFieldUpdateOperationsInput | number | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    org?: OrganizationUpdateOneWithoutProposalsNestedInput
-    category?: CategoryUpdateOneWithoutProposalsNestedInput
-    comments?: CommentUpdateManyWithoutProposalNestedInput
-  }
-
-  export type ProposalUncheckedUpdateWithoutAuthorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    orgId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
-    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
-    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    budget?: NullableIntFieldUpdateOperationsInput | number | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    comments?: CommentUncheckedUpdateManyWithoutProposalNestedInput
-  }
-
-  export type ProposalUncheckedUpdateManyWithoutAuthorInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    slug?: StringFieldUpdateOperationsInput | string
-    orgId?: NullableStringFieldUpdateOperationsInput | string | null
-    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
-    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
-    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    budget?: NullableIntFieldUpdateOperationsInput | number | null
-    attachments?: NullableJsonNullValueInput | InputJsonValue
-    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: string | null
   }
 
   export type CommentUpdateWithoutUserInput = {
@@ -10306,14 +12057,65 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateManyOrganizationInput = {
-    id?: string
-    email: string
-    name?: string | null
-    password?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type ProposalUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableIntFieldUpdateOperationsInput | number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUpdateManyWithoutProposalNestedInput
+    category?: CategoryUpdateOneWithoutProposalsNestedInput
+    org?: OrganizationUpdateOneWithoutProposalsNestedInput
+  }
+
+  export type ProposalUncheckedUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableIntFieldUpdateOperationsInput | number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    comments?: CommentUncheckedUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutProposalNestedInput
+  }
+
+  export type ProposalUncheckedUpdateManyWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    type?: NullableEnumProposalTypeFieldUpdateOperationsInput | $Enums.ProposalType | null
+    scheduledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    budget?: NullableIntFieldUpdateOperationsInput | number | null
+    attachments?: NullableJsonNullValueInput | InputJsonValue
+    statusNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProposalCreateManyOrgInput = {
@@ -10332,40 +12134,17 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
   }
 
-  export type UserUpdateWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    proposals?: ProposalUpdateManyWithoutAuthorNestedInput
-    comments?: CommentUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    proposals?: ProposalUncheckedUpdateManyWithoutAuthorNestedInput
-    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateManyWithoutOrganizationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type UserCreateManyOrganizationInput = {
+    id?: string
+    email: string
+    name?: string | null
+    password?: string | null
+    role?: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ProposalUpdateWithoutOrgInput = {
@@ -10382,9 +12161,11 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
-    category?: CategoryUpdateOneWithoutProposalsNestedInput
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUpdateManyWithoutProposalNestedInput
+    category?: CategoryUpdateOneWithoutProposalsNestedInput
+    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
   }
 
   export type ProposalUncheckedUpdateWithoutOrgInput = {
@@ -10403,7 +12184,9 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutProposalNestedInput
   }
 
   export type ProposalUncheckedUpdateManyWithoutOrgInput = {
@@ -10420,6 +12203,41 @@ export namespace Prisma {
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     attachments?: NullableJsonNullValueInput | InputJsonValue
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: CommentUpdateManyWithoutUserNestedInput
+    proposals?: ProposalUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    comments?: CommentUncheckedUpdateManyWithoutUserNestedInput
+    proposals?: ProposalUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutOrganizationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10440,6 +12258,7 @@ export namespace Prisma {
     statusNote?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    referenceNumber?: string | null
   }
 
   export type ProposalUpdateWithoutCategoryInput = {
@@ -10456,9 +12275,11 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    org?: OrganizationUpdateOneWithoutProposalsNestedInput
-    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUpdateManyWithoutProposalNestedInput
+    author?: UserUpdateOneRequiredWithoutProposalsNestedInput
+    org?: OrganizationUpdateOneWithoutProposalsNestedInput
   }
 
   export type ProposalUncheckedUpdateWithoutCategoryInput = {
@@ -10477,7 +12298,9 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
     comments?: CommentUncheckedUpdateManyWithoutProposalNestedInput
+    documents?: DocumentUncheckedUpdateManyWithoutProposalNestedInput
   }
 
   export type ProposalUncheckedUpdateManyWithoutCategoryInput = {
@@ -10496,6 +12319,7 @@ export namespace Prisma {
     statusNote?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    referenceNumber?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CommentCreateManyProposalInput = {
@@ -10503,6 +12327,18 @@ export namespace Prisma {
     userId: string
     body: string
     createdAt?: Date | string
+  }
+
+  export type DocumentCreateManyProposalInput = {
+    id?: string
+    name: string
+    filename: string
+    url: string
+    size?: number | null
+    uploadedAt?: Date | string
+    verified?: boolean
+    verifiedAt?: Date | string | null
+    verifiedBy?: string | null
   }
 
   export type CommentUpdateWithoutProposalInput = {
@@ -10524,6 +12360,42 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DocumentUpdateWithoutProposalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DocumentUncheckedUpdateWithoutProposalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DocumentUncheckedUpdateManyWithoutProposalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    filename?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    size?: NullableIntFieldUpdateOperationsInput | number | null
+    uploadedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    verified?: BoolFieldUpdateOperationsInput | boolean
+    verifiedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    verifiedBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

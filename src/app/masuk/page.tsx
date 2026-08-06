@@ -26,7 +26,7 @@ export default function MasukPage() {
       >
         <p className="eyebrow">Akses Media</p>
         <h1 className="section-h2" style={{ width: "100%" }}>
-          Masuk ke ruang kerja media.
+          Masuk
         </h1>
         <p className="lede" style={{ width: "100%" }}>
           Gunakan alamat email dan kata sandi yang terhubung dengan akun perusahaan pers Anda.

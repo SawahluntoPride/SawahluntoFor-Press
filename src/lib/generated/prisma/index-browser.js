@@ -167,7 +167,8 @@ exports.Prisma.ProposalScalarFieldEnum = {
   attachments: 'attachments',
   statusNote: 'statusNote',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  referenceNumber: 'referenceNumber'
 };
 
 exports.Prisma.CommentScalarFieldEnum = {
@@ -176,6 +177,19 @@ exports.Prisma.CommentScalarFieldEnum = {
   userId: 'userId',
   body: 'body',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.DocumentScalarFieldEnum = {
+  id: 'id',
+  proposalId: 'proposalId',
+  name: 'name',
+  filename: 'filename',
+  url: 'url',
+  size: 'size',
+  uploadedAt: 'uploadedAt',
+  verified: 'verified',
+  verifiedAt: 'verifiedAt',
+  verifiedBy: 'verifiedBy'
 };
 
 exports.Prisma.SortOrder = {
@@ -237,7 +251,8 @@ exports.Prisma.ModelName = {
   Organization: 'Organization',
   Category: 'Category',
   Proposal: 'Proposal',
-  Comment: 'Comment'
+  Comment: 'Comment',
+  Document: 'Document'
 };
 
 /**

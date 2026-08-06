@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useRef, useState } from "react";
 
@@ -66,13 +66,13 @@ export function UploadZone({ label }: Props) {
           upload_file
         </span>
         <div style={{ display: "flex", flexDirection: "column", textAlign: "left" }}>
-          <p style={{ fontSize: 13, color: "var(--color-muted)" }}>
+          <p style={{ fontSize: 13, color: "var(--color-muted-foreground)" }}>
             {fileName
               ? fileName
               : "Tarik & lepas PDF di sini, atau klik untuk memilih"}
           </p>
-          <p style={{ fontSize: 12, color: "var(--color-muted)" }}>
-            Maksimum 4 MB • PDF saja
+          <p style={{ fontSize: 12, color: "var(--color-muted-foreground)" }}>
+            Maksimum 4 MB â€¢ PDF saja
           </p>
         </div>
         <input
@@ -87,3 +87,4 @@ export function UploadZone({ label }: Props) {
     </div>
   );
 }
+

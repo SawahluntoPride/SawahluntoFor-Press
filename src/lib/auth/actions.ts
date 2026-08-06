@@ -11,6 +11,7 @@ import {
 import { createSession, deleteSession } from "@/lib/auth/session";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { uniqueSlug } from "@/lib/utils";
+import { markDocumentVerified, getOrCreateSubmission } from "@/lib/db/queries";
 
 export async function login(prevState: unknown, formData: FormData) {
   const parsed = LoginSchema.safeParse(Object.fromEntries(formData));
@@ -37,7 +38,54 @@ export async function login(prevState: unknown, formData: FormData) {
     };
   }
   await createSession(user.id, user.role, user.organizationId ?? undefined);
+
+  // Redirect based on role — admins and apparatus go to the admin panel,
+  // media users go to their dashboard.
+  if (user.role === "ADMIN" || user.role === "APPARATUS") {
+    redirect("/admin");
+  }
   redirect("/dashboard");
+}
+
+/**
+ * Admin-only login action. Authenticates the user and always redirects
+ * to the admin panel. If the authenticated user is not an admin or
+ * apparatus, they are redirected to the public dashboard instead.
+ */
+export async function adminLogin(prevState: unknown, formData: FormData) {
+  const parsed = LoginSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) {
+    return {
+      errors: parsed.error.flatten().fieldErrors,
+      message: "Email atau kata sandi salah.",
+    };
+  }
+  const user = await prisma.user.findUnique({
+    where: { email: parsed.data.email },
+  });
+  if (!user?.password) {
+    return {
+      errors: { email: ["Email atau kata sandi salah."] },
+      message: "Email atau kata sandi salah.",
+    };
+  }
+  const ok = await bcrypt.compare(parsed.data.password, user.password);
+  if (!ok) {
+    return {
+      errors: { password: ["Kata sandi salah."] },
+      message: "Email atau kata sandi salah.",
+    };
+  }
+
+  if (user.role !== "ADMIN" && user.role !== "APPARATUS") {
+    return {
+      errors: { email: ["Akun ini tidak memiliki akses admin."] },
+      message: "Akun ini tidak memiliki akses admin.",
+    };
+  }
+
+  await createSession(user.id, user.role, user.organizationId ?? undefined);
+  redirect("/admin");
 }
 
 export async function register(prevState: unknown, formData: FormData) {
@@ -71,17 +119,17 @@ export async function register(prevState: unknown, formData: FormData) {
       organization: { connect: { id: org.id } },
     },
   });
-  redirect("/login");
+  redirect("/masuk");
 }
 
 export async function logout() {
   await deleteSession();
-  redirect("/login");
+  redirect("/masuk");
 }
 
 export async function submitProposal(prevState: unknown, formData: FormData) {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/masuk");
 
   const parsed = ProposalSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) {
@@ -112,7 +160,7 @@ export async function submitProposal(prevState: unknown, formData: FormData) {
 
 export async function updateProposal(prevState: unknown, formData: FormData) {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/masuk");
   const id = String(formData.get("id") ?? "");
   const proposal = await prisma.proposal.findUnique({ where: { id } });
   if (!proposal) return { error: "Proposal tidak ditemukan." };
@@ -147,7 +195,7 @@ export async function updateProposal(prevState: unknown, formData: FormData) {
 
 export async function submitProposalToReview(prevState: unknown, formData: FormData) {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/masuk");
   const id = String(formData.get("id") ?? "");
   const proposal = await prisma.proposal.findUnique({ where: { id } });
   if (!proposal) return { error: "Proposal tidak ditemukan." };
@@ -166,7 +214,7 @@ export async function submitProposalToReview(prevState: unknown, formData: FormD
 
 export async function updateProposalStatus(prevState: unknown, formData: FormData) {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/masuk");
   if (user.role !== "ADMIN" && user.role !== "APPARATUS") {
     return { error: "Tidak berhak." };
   }
@@ -193,7 +241,7 @@ export async function updateProposalStatus(prevState: unknown, formData: FormDat
 
 export async function deleteProposal(formData: FormData): Promise<void> {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/masuk");
   const id = String(formData.get("id") ?? "");
   const proposal = await prisma.proposal.findUnique({ where: { id } });
   if (!proposal) redirect(`/proposals/${id}`);
@@ -208,7 +256,7 @@ export async function deleteProposal(formData: FormData): Promise<void> {
 
 export async function addComment(prevState: unknown, formData: FormData) {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/masuk");
   const proposalId = String(formData.get("proposalId") ?? "");
   const body = String(formData.get("body") ?? "").trim();
   if (!proposalId || !body) {
@@ -219,4 +267,36 @@ export async function addComment(prevState: unknown, formData: FormData) {
   });
   revalidatePath(`/proposals/${proposalId}`);
   return { ok: true };
+}
+
+/* ─────────────────────── Admin document verification ─────────────────────── */
+
+export async function verifyDocument(prevState: unknown, formData: FormData) {
+  const user = await getCurrentUser();
+  if (!user) redirect("/masuk");
+  if (user.role !== "ADMIN" && user.role !== "APPARATUS") {
+    return { error: "Tidak berhak." };
+  }
+  const documentId = String(formData.get("documentId") ?? "");
+  if (!documentId) return { error: "Dokumen tidak ditemukan." };
+
+  const result = await markDocumentVerified(documentId, user.id);
+  if (!result) return { error: "Dokumen tidak ditemukan." };
+
+  revalidatePath(`/admin/proposals/${result.proposalId}`);
+  revalidatePath(`/admin`);
+
+  return {
+    ok: true,
+    documentId,
+    proposalId: result.proposalId,
+  };
+}
+
+export async function getOrCreateSubmissionAction() {
+  const user = await getCurrentUser();
+  if (!user) redirect("/masuk");
+  if (!user.organizationId) redirect("/daftar");
+  const proposal = await getOrCreateSubmission(user.id, user.organizationId);
+  return proposal;
 }

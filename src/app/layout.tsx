@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Header from "@/components/layout/header";
+import { ConditionalHeader } from "@/components/layout/conditional-header";
 import { youngSerif, googleSansFlex, inter } from "@/lib/fonts";
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       className={`${youngSerif.variable} ${googleSansFlex.variable} ${inter.variable}`}
     >
       <body>
-        <Header />
+        <ConditionalHeader />
         <main>{children}</main>
       </body>
     </html>

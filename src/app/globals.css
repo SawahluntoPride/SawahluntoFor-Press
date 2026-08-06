@@ -1,4 +1,80 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Symbols+Rounded");
+@import "tailwindcss";
+
+/* ——————————————————————————————————————————————————————————————
+   Tailwind v4 theme - mapped identically to the Framer reference
+   design tokens so every Tailwind utility rendered by components
+   (UserMenu, Select, Button, Card, Badge, Footer, etc.) matches
+   the hand-rolled CSS primitives below.
+   —————————————————————————————————————————————————————————————— */
+@theme {
+  /* Semantic colours - mirror the Framer token set 1:1 */
+  --color-background: #f5f1e8;
+  --color-foreground: #1d1c19;
+  --color-muted: #eae4d8;
+  --color-muted-foreground: #706e68;
+  --color-border: #d5cfc4;
+  --color-input: #d5cfc4;
+  --color-card: #eae4d8;
+  --color-card-foreground: #1d1c19;
+  --color-primary: #1d1c19;
+  --color-primary-foreground: #ffffff;
+  --color-accent: #ff6a1a;
+  --color-accent-foreground: #ffffff;
+  --color-destructive: #a63a2d;
+  --color-destructive-foreground: #ffffff;
+  --color-secondary: #eae4d8;
+  --color-secondary-foreground: #1d1c19;
+  --color-popover: #eae4d8;
+  --color-popover-foreground: #1d1c19;
+  --color-ring: #ff6a1a;
+  --color-slate-50: #f5f1e8;
+  --color-slate-100: #eae4d8;
+  --color-slate-200: #d5cfc4;
+  --color-slate-300: #c0b9ad;
+  --color-slate-400: #a69b8b;
+  --color-slate-500: #706e68;
+  --color-slate-600: #5a5750;
+  --color-slate-700: #403d36;
+  --color-slate-800: #2d2b27;
+  --color-slate-900: #1d1c19;
+  --color-slate-950: #141311;
+  --color-orange-50: #fff5ec;
+  --color-orange-100: #ffe5d0;
+  --color-orange-200: #ffca9e;
+  --color-orange-300: #ff9d6c;
+  --color-orange-400: #ff6a1a;
+  --color-orange-500: #d94b0b;
+  --color-orange-600: #b83c00;
+  --color-orange-700: #8a2d00;
+  --color-red-50: #ffe8e6;
+  --color-red-100: #ffcccc;
+  --color-red-200: #ff9b9b;
+  --color-red-300: #ff6a6a;
+  --color-red-400: #a63a2d;
+  --color-red-500: #8a241c;
+  --color-red-600: #6b1c17;
+  --color-red-700: #4d1411;
+
+  /* Spacing scale - Framer uses 4px grid, Tailwind default is 4px too */
+
+  /* Font families - match next/font variables */
+  --font-family-sans: var(--font-body), "Google Sans Flex", sans-serif;
+  --font-family-serif: var(--font-heading), "Young Serif", Georgia, serif;
+  --font-family-mono: var(--font-inter), Inter, monospace;
+  --font-family-body: var(--font-body), "Google Sans Flex", sans-serif;
+  --font-family-heading: var(--font-heading), "Young Serif", Georgia, serif;
+  --font-family-inter: var(--font-inter), Inter, sans-serif;
+
+  /* Border radius - Framer reference uses 2px everywhere */
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --radius-full: 2px;
+
+  /* Keyframes - reuse existing CSS keyframes */
+}
 
 html,
 body,
@@ -11,7 +87,7 @@ body,
 :root {
   --color-bg: #f5f1e8;
   --color-ink: #1d1c19;
-  --color-muted: #706e68;
+  --color-muted-foreground: #706e68;
   --color-line: #d5cfc4;
   --color-panel: #eae4d8;
   --color-accent: #ff6a1a;
@@ -74,6 +150,7 @@ a {
 }
 
 .material-symbols-rounded {
+  font-family: "Material Symbols Rounded";
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   line-height: 1;
   vertical-align: -0.125em;
@@ -99,7 +176,7 @@ a {
   letter-spacing: 1.1px;
   line-height: 1.2;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
 }
 
 .eyebrow-accent {
@@ -113,7 +190,7 @@ a {
 .lede {
   font-size: 15px;
   line-height: 1.55;
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
 }
 
 .btn-primary {
@@ -407,4 +484,1498 @@ a {
     transform: none !important;
     opacity: 1 !important;
   }
+}
+
+/* =================================================================
+   Admin Dashboard - same Framer visual design tokens, adapted for a
+   professional, efficient admin workspace.
+   ================================================================= */
+
+/* Admin layout container */
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* Admin top bar - identical token usage as .site-header */
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 22px 48px;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.admin-header a {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1em;
+  color: var(--color-ink);
+  transition: color 0.2s ease;
+}
+
+.admin-header a:hover {
+  color: var(--color-accent);
+}
+
+.admin-logo {
+  height: 50px;
+  width: 110px;
+  object-fit: cover;
+  object-position: left center;
+  display: block;
+}
+
+/* Admin header actions - nav links + user menu + role badge */
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-header-link {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1em;
+  color: var(--color-ink);
+  transition: color 0.2s ease;
+}
+
+.admin-header-link:hover {
+  color: var(--color-accent);
+}
+
+/* Admin sidebar navigation */
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  width: 240px;
+  min-height: calc(100vh - 86px);
+  margin-top: 86px;
+  margin-right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  background: var(--color-panel);
+}
+
+.admin-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1em;
+  color: var(--color-ink);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+
+.admin-sidebar .nav-link:hover {
+  background: rgba(255, 106, 26, 0.08);
+  color: var(--color-accent);
+}
+
+.admin-sidebar .nav-link.active {
+  background: rgba(255, 106, 26, 0.12);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.admin-sidebar .nav-link.active .icon {
+  color: var(--color-accent);
+}
+
+.nav-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  color: var(--color-muted-foreground);
+}
+
+/* Admin main content */
+.admin-main {
+  flex: 1;
+  width: 100%;
+  padding: 48px;
+}
+
+.admin-content {
+  max-width: 1160px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Admin page header */
+.admin-page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.admin-page-title {
+  font-family: var(--font-heading), "Young Serif", Georgia, serif;
+  font-size: 36px;
+  line-height: 1.12;
+  letter-spacing: -0.4px;
+  color: var(--color-ink);
+  font-weight: 400;
+}
+
+/* Admin stat cards grid */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.admin-stat-card {
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-stat-value {
+  font-family: var(--font-heading), "Young Serif", Georgia, serif;
+  font-size: 38px;
+  line-height: 1.05;
+  color: var(--color-ink);
+  font-weight: 400;
+}
+
+.admin-stat-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+.admin-stat-accent .admin-stat-value {
+  color: var(--color-accent);
+}
+
+/* Admin table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+  overflow: hidden;
+}
+
+.admin-table th {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-line);
+  background: rgba(234, 228, 216, 0.6);
+}
+
+.admin-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--color-line);
+  font-size: 14px;
+  color: var(--color-ink);
+  font-family: var(--font-body), "Google Sans Flex", sans-serif;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(255, 106, 26, 0.04);
+}
+
+.admin-table .col-num {
+  width: 36px;
+  text-align: center;
+  color: var(--color-muted-foreground);
+  font-size: 13px;
+}
+
+.admin-table .col-ref {
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.admin-table .col-verified {
+  text-align: center;
+}
+
+/* Admin document list */
+.admin-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.admin-doc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  background: var(--color-panel);
+}
+
+.admin-doc-item + .admin-doc-item {
+  border-top: none;
+}
+
+.admin-doc-item:hover {
+  background: #f0e9db;
+}
+
+.admin-doc-item:last-child {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+.admin-doc-item-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-doc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  color: var(--color-accent);
+}
+
+.admin-doc-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.admin-doc-meta {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+.admin-doc-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-doc-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Admin detail toolbar */
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  background: var(--color-panel);
+}
+
+/* Admin badge styles */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.admin-badge-submitted {
+  border-color: #d1d0cb;
+  color: #706e68;
+  background: rgba(112, 110, 104, 0.08);
+}
+
+.admin-badge-in-review {
+  border-color: #d5cfc4;
+  color: #1d1c19;
+  background: rgba(255, 106, 26, 0.08);
+}
+
+.admin-badge-approved {
+  border-color: #a63a2d;
+  color: #a63a2d;
+  background: rgba(166, 58, 45, 0.08);
+}
+
+.admin-badge-pending-docs {
+  border-color: #d5cfc4;
+  color: #706e68;
+  background: rgba(214, 207, 196, 0.2);
+}
+
+/* Reference number pill */
+.ref-number {
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  padding: 6px 16px;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg);
+  letter-spacing: 0.5px;
+}
+
+.ref-number-generated {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: rgba(255, 106, 26, 0.06);
+}
+
+/* Admin form row */
+.admin-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.admin-form-row label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+/* Progress bar for verification */
+.admin-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-muted-foreground);
+}
+
+.admin-progress-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-line);
+  overflow: hidden;
+}
+
+.admin-progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+/* Mobile adjustments for admin */
+@media (max-width: 809px) {
+  .admin-header {
+    padding: 20px 22px;
+  }
+
+  .admin-main {
+    padding: 36px 22px;
+  }
+
+  .admin-sidebar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+    margin: 0 0 20px 0;
+    margin-right: 0;
+    padding: 8px;
+  }
+
+  .admin-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .admin-table {
+    font-size: 13px;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 12px 12px;
+  }
+}
+
+@media (min-width: 810px) and (max-width: 1199px) {
+  .admin-header {
+    padding: 20px 32px;
+  }
+
+  .admin-main {
+    padding: 40px 32px;
+  }
+
+  .admin-sidebar {
+    width: 220px;
+    margin-top: 78px;
+  }
+
+  .admin-page-title {
+    font-size: 32px;
+  }
+}
+
+/* —— All-Documents consolidated view (admin dashboard) —— */
+.admin-documents-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.admin-doc-card {
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.admin-doc-card:hover {
+  background: #f0e9db;
+}
+
+.admin-doc-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-doc-thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.admin-doc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-doc-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-doc-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-doc-org {
+  font-size: 13px;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-doc-date {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+
+.admin-doc-ref {
+  font-family: var(--font-inter), Inter, monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.admin-doc-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.admin-doc-status-small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-muted-foreground);
+  white-space: nowrap;
+}
+
+.admin-doc-status-verified .admin-doc-status-small {
+  color: var(--color-accent);
+}
+
+.admin-doc-status-pending .admin-doc-status-small {
+  color: var(--color-muted-foreground);
+}
+
+.admin-doc-actions-small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-doc-verify-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-ink);
+  padding: 6px 14px;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  background: var(--color-panel);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.admin-doc-verify-btn:hover {
+  background: rgba(255, 106, 26, 0.06);
+  color: var(--color-accent);
+}
+
+.admin-doc-verify-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Admin documents section - responsive */
+@media (max-width: 809px) {
+  .admin-doc-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px;
+  }
+
+  .admin-doc-right {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .admin-doc-meta-row {
+    gap: 8px;
+  }
+}
+
+/* Admin inner layout - sidebar + main content flex container */
+.admin-inner {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  gap: 28px;
+}
+
+/* Admin Login Page - Framer aesthetic, centred credential card */
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: var(--color-bg);
+}
+
+.admin-login-shell {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.admin-login-header {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  text-align: center;
+}
+
+.admin-login-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg);
+  color: var(--color-accent);
+  font-size: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-login-title {
+  font-family: var(--font-heading), "Young Serif", Georgia, serif;
+  font-size: 26px;
+  line-height: 1.12;
+  letter-spacing: -0.3px;
+  color: var(--color-ink);
+  font-weight: 400;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.admin-login-form .form-field {
+  width: 100%;
+}
+
+.admin-login-error {
+  font-size: 13px;
+  color: var(--color-danger);
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 2px;
+  background: rgba(166, 58, 45, 0.06);
+  border: 1px solid var(--color-danger);
+}
+
+.admin-login-submit {
+  width: 100%;
+  height: 48px;
+}
+
+.admin-login-footer {
+  text-align: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-line);
+}
+
+/* Password field toggle button inside login form */
+.admin-password-toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--color-muted-foreground);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.admin-password-toggle:hover {
+  color: var(--color-ink);
+}
+
+.admin-password-wrapper {
+  position: relative;
+}
+
+/* Admin documents page - dedicated standalone route */
+.admin-documents-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.admin-documents-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-documents-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-documents-filters label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+.admin-documents-filters select {
+  height: 34px;
+  padding: 6px 12px;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-bg);
+  font-size: 13px;
+  font-family: var(--font-body), "Google Sans Flex", sans-serif;
+  color: var(--color-ink);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.admin-documents-filters select:focus {
+  border-color: var(--color-accent);
+}
+
+.admin-documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.admin-doc-item-card {
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.admin-doc-item-card:hover {
+  background: #f0e9db;
+}
+
+.admin-doc-item-card .admin-doc-thumb {
+  width: 42px;
+  height: 42px;
+  font-size: 24px;
+}
+
+.admin-doc-item-card .admin-doc-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.admin-doc-item-card .admin-doc-meta {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+.admin-doc-item-card .admin-doc-ref {
+  font-family: var(--font-inter), Inter, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.admin-doc-item-card .admin-doc-verify-btn {
+  align-self: flex-start;
+}
+
+/* Responsive for admin documents page */
+@media (max-width: 809px) {
+  .admin-documents-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-documents-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   Admin Dashboard supplemental classes — replaces inline styles
+   in TSX with proper CSS classes, 4px-grid spacing, Framer tokens
+   ────────────────────────────────────────────────────────────── */
+
+/* Section subheading — 26px Young Serif, used instead of admin-page-title with inline fontSize */
+.admin-section-subheading {
+  font-family: var(--font-heading), "Young Serif", Georgia, serif;
+  font-size: 26px;
+  line-height: 1.12;
+  letter-spacing: -0.2px;
+  color: var(--color-ink);
+  font-weight: 400;
+}
+
+/* Flex row for eyebrow + lede side by side */
+.admin-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Filter tabs container */
+.admin-filter-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  background: var(--color-bg);
+  width: fit-content;
+}
+
+/* Individual filter tab */
+.admin-filter-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 18px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  color: var(--color-muted-foreground);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.admin-filter-tab:hover {
+  color: var(--color-ink);
+}
+
+.admin-filter-tab.active {
+  color: var(--color-ink);
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+}
+
+.admin-filter-tab .icon {
+  font-size: 16px;
+}
+
+/* Admin content section wrapper — flex column with 28px gap */
+.admin-section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+/* Sub-section with smaller gap (14px between label and heading) */
+.admin-sub-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* Section header row: eyebrow + lede on one line */
+.admin-section-header-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Empty state panel */
+.admin-empty-state {
+  width: 100%;
+  padding: 48px;
+  text-align: center;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  background: var(--color-panel);
+}
+
+.admin-empty-icon {
+  font-size: 48px;
+  color: var(--color-muted-foreground);
+  display: block;
+  margin-bottom: 16px;
+}
+
+/* Stat card accent value */
+.admin-stat-card .admin-stat-value.accent {
+  color: var(--color-accent);
+}
+
+/* Stat label with accent */
+.admin-stat-label.accent {
+  color: var(--color-accent);
+}
+
+/* Table link styling */
+.admin-table a {
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.admin-table a:hover {
+  color: var(--color-accent);
+}
+
+/* Table cell with text truncation */
+.admin-table .col-title {
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-table .col-meta {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+.admin-table .col-date {
+  font-size: 13px;
+  color: var(--color-muted-foreground);
+}
+
+.admin-table .col-verified {
+  text-align: center;
+}
+
+/* Action link in table */
+.admin-table .action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  color: var(--color-ink);
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.admin-table .action-link:hover {
+  background: rgba(255, 106, 26, 0.06);
+  color: var(--color-accent);
+}
+
+.admin-table .action-link .material-symbols-rounded {
+  font-size: 16px;
+}
+
+/* Progress text under bar */
+.admin-progress-note {
+  font-size: 11px;
+  color: var(--color-muted-foreground);
+  margin-top: 4px;
+}
+
+.admin-progress-count {
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+}
+
+/* Badge with smaller size for inline use */
+.admin-badge.small {
+  font-size: 11px;
+  padding: 4px 10px;
+}
+
+.admin-badge.small .material-symbols-rounded {
+  font-size: 12px;
+}
+
+/* Admin doc status wrapper */
+.admin-doc-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Verification checkmark */
+.admin-doc-verified-check {
+  color: var(--color-accent);
+  font-size: 16px;
+}
+
+/* Toolbar for documents page */
+.admin-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 809px) {
+  .admin-section-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .admin-filter-tabs {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+
+/* Document card header (thumb + info row) */
+.admin-doc-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+/* Document card info column */
+.admin-doc-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Document card actions row */
+.admin-doc-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Wide lede text */
+.admin-lede-wide {
+  max-width: 640px;
+}
+
+/* Doc meta with danger color */
+.admin-doc-meta.danger {
+  color: var(--color-danger);
+}
+
+/* Small action link */
+.admin-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.admin-action-link:hover {
+  background: rgba(255, 106, 26, 0.06);
+  color: var(--color-accent);
+}
+
+.admin-action-link .material-symbols-rounded {
+  font-size: 16px;
+}
+
+/* Stat value accent */
+.admin-stat-value.accent {
+  color: var(--color-accent);
+}
+
+/* Stat label accent */
+.admin-stat-label.accent {
+  color: var(--color-accent);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   Proposal detail page classes
+   ────────────────────────────────────────────────────────────── */
+
+/* Proposal header row: title + ref number side by side */
+.admin-proposal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Title group: eyebrow + h1 + lede */
+.admin-proposal-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+/* Reference number row */
+.admin-ref-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Ref number label */
+.admin-ref-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* Tracker link */
+.admin-tracker-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 3;
+  transition: color 0.2s ease;
+}
+
+.admin-tracker-link:hover {
+  color: var(--color-accent);
+}
+
+/* Toolbar with progress + badge */
+.admin-toolbar-progress {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+}
+
+.admin-toolbar-progress .admin-progress {
+  flex: 1;
+}
+
+/* Progress labels row */
+.admin-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--color-muted-foreground);
+  margin-bottom: 4px;
+}
+
+/* Elevated progress bar */
+.admin-progress-bar.elevated {
+  height: 6px;
+}
+
+/* Proposal info grid */
+.admin-proposal-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px 28px;
+  width: 100%;
+}
+
+/* Field label (reused in proposal detail) */
+.admin-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+/* Field value */
+.admin-field-value {
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+/* Field value with description line height */
+.admin-field-value.desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-ink);
+}
+
+/* Document item info column */
+.admin-doc-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Small action link */
+.admin-action-link.small {
+  font-size: 12px;
+  padding: 6px 14px;
+  gap: 4px;
+}
+
+.admin-action-link.small .material-symbols-rounded {
+  font-size: 16px;
+}
+
+/* Verified banner */
+.admin-verified-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border: 1px solid var(--color-accent);
+  border-radius: 2px;
+  background: rgba(255, 106, 26, 0.06);
+  margin-top: 4px;
+}
+
+.admin-verified-banner .icon {
+  font-size: 28px;
+  color: var(--color-accent);
+}
+
+.admin-verified-banner .admin-subheading {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* Back link */
+.admin-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.admin-back-link:hover {
+  color: var(--color-accent);
+}
+
+.admin-back-link .material-symbols-rounded {
+  font-size: 18px;
+}
+
+/* Doc verify badge */
+.admin-doc-verify-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Badge pending-docs for inline use (no flex) */
+.admin-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Responsive for proposal detail */
+@media (max-width: 809px) {
+  .admin-proposal-grid {
+    grid-template-columns: 1fr;
+    gap: 4px 28px;
+  }
+
+  .admin-proposal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* Ref label group (column) */
+.admin-ref-label-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Detail panel with content padding */
+.admin-detail-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+}
+
+/* Verified banner text */
+.admin-verified-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.admin-verified-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.admin-badge-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-doc-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-progress-bar.elevated {
+  height: 6px;
+}
+
+
+/* Admin role badge — extends .admin-badge with bg + dynamic color */
+.admin-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1px solid var(--color-line);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--color-bg);
+}
+
+.admin-role-badge.admin { color: var(--color-danger); }
+.admin-role-badge.aparatus { color: var(--color-accent); }
+.admin-role-badge.media { color: var(--color-ink); }
+
+.admin-role-badge .material-symbols-rounded {
+  font-size: 14px;
+}
+
+
+/* Verify button error message */
+.admin-doc-error {
+  font-size: 12px;
+  color: var(--color-danger);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* Icon inside verify button/verified status — 16px */
+.admin-verify-btn-icon {
+  font-size: 16px;
 }

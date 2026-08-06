@@ -1,12 +1,16 @@
 import Link from "next/link";
+import { REQUIRED_DOCS, DOC_TAGS } from "@/lib/documents";
 
-const docs = [
-  { name: "Akta Notaris", tag: "Wajib" },
-  { name: "Bukti Terverifikasi Dewan Pers", tag: "Wajib" },
-  { name: "NIB — Nomor Induk Berusaha", tag: "Wajib" },
-  { name: "Sertifikat Redaktur", tag: "Wajib" },
-  { name: "NPWP Perusahaan", tag: "Wajib" },
-];
+// The checklist on this page follows the Framer reference: "Surat Permohonan
+// Kerjasama" is the page title (the main submission document), so it is
+// excluded from the supporting-document checklist below. The uploader on
+// /verifikasi-berkas still accepts ALL required docs (REQUIRED_DOCS).
+const checklistDocs = REQUIRED_DOCS.filter(
+  (name) => name !== "Surat Permohonan Kerjasama",
+).map((name) => ({
+  name,
+  tag: DOC_TAGS[name] ?? "Wajib",
+}));
 
 export const metadata = {
   title: "Ajukan Kerja Sama",
@@ -28,7 +32,7 @@ export default function AjukanPage() {
         menggunakan data perusahaan pers yang sama.
       </p>
       <div className="panel" style={{ width: "100%", display: "flex", flexDirection: "column" }}>
-        {docs.map((doc, i) => (
+        {checklistDocs.map((doc, i) => (
           <div
             key={doc.name}
             style={{
@@ -37,7 +41,7 @@ export default function AjukanPage() {
               justifyContent: "space-between",
               gap: 16,
               padding: "20px 22px",
-              borderBottom: i < docs.length - 1 ? "1px solid var(--color-line)" : "none",
+              borderBottom: i < checklistDocs.length - 1 ? "1px solid var(--color-line)" : "none",
             }}
           >
             <p style={{ fontSize: 15, fontWeight: 500, color: "var(--color-ink)" }}>{doc.name}</p>

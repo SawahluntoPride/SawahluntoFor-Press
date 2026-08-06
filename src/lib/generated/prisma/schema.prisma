@@ -15,17 +15,11 @@ model User {
   password       String?
   role           Role          @default(MEDIA)
   organizationId String?
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  proposals      Proposal[]
-  comments       Comment[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
-}
-
-enum Role {
-  MEDIA
-  APPARATUS
-  ADMIN
+  comments       Comment[]
+  proposals      Proposal[]
+  organization   Organization? @relation(fields: [organizationId], references: [id])
 }
 
 model Organization {
@@ -40,15 +34,10 @@ model Organization {
   address       String?
   website       String?
   verified      Boolean    @default(false)
-  users         User[]
-  proposals     Proposal[]
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-}
-
-enum OrgType {
-  MEDIA_OUTLET
-  GOV_DEPT
+  proposals     Proposal[]
+  users         User[]
 }
 
 model Category {
@@ -59,26 +48,63 @@ model Category {
 }
 
 model Proposal {
-  id          String         @id @default(cuid())
-  title       String
-  slug        String         @unique
-  orgId       String?
-  org         Organization?  @relation(fields: [orgId], references: [id])
-  authorId    String
-  author      User           @relation(fields: [authorId], references: [id])
-  categoryId  String?
-  category    Category?      @relation(fields: [categoryId], references: [id])
-  status      ProposalStatus @default(DRAFT)
-  type        ProposalType?
-  scheduledAt DateTime?
-  location    String?
-  description String?
-  budget      Int?
-  attachments Json?
-  statusNote  String?
-  comments    Comment[]
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id              String         @id @default(cuid())
+  title           String
+  slug            String         @unique
+  orgId           String?
+  authorId        String
+  categoryId      String?
+  status          ProposalStatus @default(DRAFT)
+  type            ProposalType?
+  scheduledAt     DateTime?
+  location        String?
+  description     String?
+  budget          Int?
+  attachments     Json?
+  statusNote      String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  referenceNumber String?
+  comments        Comment[]
+  documents       Document[]
+  category        Category?      @relation(fields: [categoryId], references: [id])
+  author          User           @relation(fields: [authorId], references: [id])
+  org             Organization?  @relation(fields: [orgId], references: [id])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  proposalId String
+  userId     String
+  body       String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
+  proposal   Proposal @relation(fields: [proposalId], references: [id])
+}
+
+model Document {
+  id         String    @id @default(cuid())
+  proposalId String
+  name       String
+  filename   String
+  url        String
+  size       Int?
+  uploadedAt DateTime  @default(now())
+  verified   Boolean   @default(false)
+  verifiedAt DateTime?
+  verifiedBy String?
+  proposal   Proposal  @relation(fields: [proposalId], references: [id])
+}
+
+enum Role {
+  MEDIA
+  APPARATUS
+  ADMIN
+}
+
+enum OrgType {
+  MEDIA_OUTLET
+  GOV_DEPT
 }
 
 enum ProposalStatus {
@@ -97,14 +123,4 @@ enum ProposalType {
   MEDIA_VISIT
   INTERVIEW
   EVENT_PARTNERSHIP
-}
-
-model Comment {
-  id         String   @id @default(cuid())
-  proposalId String
-  proposal   Proposal @relation(fields: [proposalId], references: [id])
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  body       String
-  createdAt  DateTime @default(now())
 }

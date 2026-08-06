@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { type ReactNode } from "react";
 
 export function FormField({
@@ -25,14 +25,15 @@ export function FormField({
           textTransform: "uppercase" as const,
           letterSpacing: "1.1px",
           lineHeight: 1.2,
-          color: "var(--color-muted)",
+          color: "var(--color-muted-foreground)",
         }}
       >
         {label}
       </label>
       {children}
-      {description && <p style={{ fontSize: 12, color: "var(--color-muted)" }}>{description}</p>}
+      {description && <p style={{ fontSize: 12, color: "var(--color-muted-foreground)" }}>{description}</p>}
       {message && <span style={{ fontSize: 12, color: "var(--color-danger)" }}>{message}</span>}
     </div>
   );
 }
+

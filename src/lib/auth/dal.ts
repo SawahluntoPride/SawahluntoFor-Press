@@ -38,7 +38,21 @@ export async function requireUser(): Promise<UserSession> {
   const user = await getCurrentUser();
   if (!user) {
     const { redirect } = await import("next/navigation");
-    redirect("/login");
+    redirect("/masuk");
   }
   return user!;
+}
+
+export async function requireAdmin(): Promise<UserSession> {
+  const user = await getCurrentUser();
+  if (!user) {
+    const { redirect } = await import("next/navigation");
+    redirect("/admin/masuk");
+  }
+  const adminUser = user!;
+  if (adminUser.role !== "ADMIN" && adminUser.role !== "APPARATUS") {
+    const { redirect } = await import("next/navigation");
+    redirect("/dashboard");
+  }
+  return adminUser;
 }
