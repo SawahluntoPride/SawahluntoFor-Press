@@ -1,5 +1,7 @@
 # Kerja Sama Pers Sawahlunto
 
+[![GitHub](https://img.shields.io/badge/GitHub-Kr1ss007%2FSawahluntoFor-Press-blue?logo=github)](https://github.com/Kr1ss007/SawahluntoFor-Press)
+
 Portal layanan pengajuan dan pengelolaan kerja sama publikasi antara **Pemerintah Kota Sawahlunto** dan perusahaan media pers.
 
 Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi, panduan, unggah berkas, verifikasi, pelacakan status, serta akses akun media.
@@ -12,6 +14,9 @@ Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi,
 - **Verifikasi berkas** — unggah PDF (maks. 4 MB) per dokumen
 - **Status pengajuan** — lacak pengajuan dengan nomor referensi
 - **Masuk / Daftar** — akses akun perusahaan pers
+- **Dashboard** — halaman admin untuk manajemen pengajuan
+- **Admin - Proposals** — lihat dan kelola semua pengajuan kerja sama
+- **Admin - Documents** — verifikasi dan kelola dokumen yang diunggah
 
 ## Tech stack
 
@@ -35,6 +40,12 @@ Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi,
 | `/status` | Langkah 03 — lacak nomor pengajuan |
 | `/masuk` | Login akun media |
 | `/daftar` | Informasi pendaftaran media |
+| `/dashboard` | Dashboard admin |
+| `/admin` | Admin home |
+| `/admin/proposals` | Daftar pengajuan |
+| `/admin/proposals/[id]` | Detail pengajuan |
+| `/admin/documents` | Manajemen dokumen |
+| `/api/upload` | API unggah dokumen |
 
 ## Prasyarat
 
@@ -45,8 +56,8 @@ Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi,
 
 ```bash
 # 1. Clone repositori
-git clone https://github.com/raven1zed/aplikasi-penawaran-kerjasama-antara-pemerintah-dan-media-pers.git
-cd aplikasi-penawaran-kerjasama-antara-pemerintah-dan-media-pers
+git clone https://github.com/Kr1ss007/SawahluntoFor-Press.git
+cd SawahluntoFor-Press
 
 # 2. Install dependensi
 npm install
@@ -97,14 +108,25 @@ npm run typecheck  # TypeScript tanpa emit
 
 ```
 src/
-  app/                 # App Router pages & API
-  components/          # UI & layout
+  app/
+    admin/             # Admin dashboard, proposals, documents
+    api/upload/        # Document upload API endpoint
+    dashboard/         # Admin dashboard page
+    ajukan/            # Submission form
+    verifikasi-berkas/ # Document upload
+    status/            # Application status tracking
+    masuk/             # Login page
+  components/
+    admin/             # Admin-specific components
+    layout/            # Layout components
+    ui/                # Reusable UI components
   lib/
     auth/              # login, session, DAL
+    documents.ts       # Document handling utilities
     fonts.ts           # Young Serif, Google Sans Flex, Inter
     generated/prisma/  # Prisma Client output
 prisma/
-  schema.prisma        # model User, Organization, Proposal, …
+  schema.prisma        # model User, Organization, Proposal, Document, …
 public/
   logo.png
   fonts/
