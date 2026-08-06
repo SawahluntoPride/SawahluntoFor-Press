@@ -1,10 +1,10 @@
-# Kerja Sama Pers Sawahlunto
+# Horizon Graze Studio - Kerja Sama Pers Sawahlunto
 
-[![GitHub](https://img.shields.io/badge/GitHub-Kr1ss007%2FSawahluntoFor-Press-blue?logo=github)](https://github.com/Kr1ss007/SawahluntoFor-Press)
+[![GitHub](https://img.shields.io/badge/GitHub-SawahluntoPride%2FHorizon-Graze-Studio-blue?logo=github)](https://github.com/SawahluntoPride/Horizon-Graze-Studio)
 
 Portal layanan pengajuan dan pengelolaan kerja sama publikasi antara **Pemerintah Kota Sawahlunto** dan perusahaan media pers.
 
-Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi, panduan, unggah berkas, verifikasi, pelacakan status, serta akses akun media.
+Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi, panduan, unggah berkas, verifikasi, pelacakan status, serta akses akun media. Dikembangkan oleh **Horizon Graze Studio**.
 
 ## Fitur
 
@@ -56,8 +56,8 @@ Aplikasi ini mereplikasi alur administrasi dari situs layanan publik: informasi,
 
 ```bash
 # 1. Clone repositori
-git clone https://github.com/Kr1ss007/SawahluntoFor-Press.git
-cd SawahluntoFor-Press
+git clone https://github.com/SawahluntoPride/Horizon-Graze-Studio.git
+cd Horizon-Graze-Studio
 
 # 2. Install dependensi
 npm install
