@@ -1,6 +1,6 @@
 # Horizon Graze Studio - Kerja Sama Pers Sawahlunto
 
-[![GitHub](https://img.shields.io/badge/GitHub-SawahluntoPride%2FHorizon-Graze-Studio-blue?logo=github)](https://github.com/SawahluntoPride/Horizon-Graze-Studio)
+[![GitHub](https://img.shields.io/github/repo-size/SawahluntoPride/Horizon-Graze-Studio?logo=github)](https://github.com/SawahluntoPride/Horizon-Graze-Studio)
 
 Portal layanan pengajuan dan pengelolaan kerja sama publikasi antara **Pemerintah Kota Sawahlunto** dan perusahaan media pers.
 
