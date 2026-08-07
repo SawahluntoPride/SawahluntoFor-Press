@@ -4,44 +4,34 @@ import { revalidatePath } from "next/cache";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import {
-  LoginSchema,
   RegisterSchema,
   ProposalSchema,
 } from "@/lib/auth/definitions";
-import { createSession, deleteSession } from "@/lib/auth/session";
+import { deleteSession } from "@/lib/auth/session";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { uniqueSlug } from "@/lib/utils";
 import { markDocumentVerified, getOrCreateSubmission } from "@/lib/db/queries";
+import { authenticateUser, createUserSession } from "@/lib/auth/utils";
 
 export async function login(prevState: unknown, formData: FormData) {
-  const parsed = LoginSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) {
-    return {
-      errors: parsed.error.flatten().fieldErrors,
-      message: "Email atau kata sandi salah.",
-    };
+  const result = await authenticateUser(formData, false);
+  
+  if (result.errors || result.message) {
+    return result;
   }
-  const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email },
-  });
-  if (!user?.password) {
+
+  if (!result.user) {
     return {
       errors: { email: ["Email atau kata sandi salah."] },
       message: "Email atau kata sandi salah.",
     };
   }
-  const ok = await bcrypt.compare(parsed.data.password, user.password);
-  if (!ok) {
-    return {
-      errors: { password: ["Kata sandi salah."] },
-      message: "Email atau kata sandi salah.",
-    };
-  }
-  await createSession(user.id, user.role, user.organizationId ?? undefined);
+
+  await createUserSession(result.user.id, result.user.role, result.user.organizationId);
 
   // Redirect based on role — admins and apparatus go to the admin panel,
   // media users go to their dashboard.
-  if (user.role === "ADMIN" || user.role === "APPARATUS") {
+  if (result.user.role === "ADMIN" || result.user.role === "APPARATUS") {
     redirect("/admin");
   }
   redirect("/dashboard");
@@ -53,38 +43,20 @@ export async function login(prevState: unknown, formData: FormData) {
  * apparatus, they are redirected to the public dashboard instead.
  */
 export async function adminLogin(prevState: unknown, formData: FormData) {
-  const parsed = LoginSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) {
-    return {
-      errors: parsed.error.flatten().fieldErrors,
-      message: "Email atau kata sandi salah.",
-    };
+  const result = await authenticateUser(formData, true);
+  
+  if (result.errors || result.message) {
+    return result;
   }
-  const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email },
-  });
-  if (!user?.password) {
+
+  if (!result.user) {
     return {
       errors: { email: ["Email atau kata sandi salah."] },
       message: "Email atau kata sandi salah.",
     };
   }
-  const ok = await bcrypt.compare(parsed.data.password, user.password);
-  if (!ok) {
-    return {
-      errors: { password: ["Kata sandi salah."] },
-      message: "Email atau kata sandi salah.",
-    };
-  }
 
-  if (user.role !== "ADMIN" && user.role !== "APPARATUS") {
-    return {
-      errors: { email: ["Akun ini tidak memiliki akses admin."] },
-      message: "Akun ini tidak memiliki akses admin.",
-    };
-  }
-
-  await createSession(user.id, user.role, user.organizationId ?? undefined);
+  await createUserSession(result.user.id, result.user.role, result.user.organizationId);
   redirect("/admin");
 }
 

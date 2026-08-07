@@ -1,7 +1,7 @@
 ﻿import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { REQUIRED_DOCS } from "@/lib/documents";
-import { getAdminAllDocuments } from "@/lib/db/queries";
+import { getAdminAllDocuments, type PaginatedResult } from "@/lib/db/queries";
 import { requireAdmin } from "@/lib/auth/dal";
 import { VerifyDocumentButton } from "@/components/admin/verify-document-button";
 
@@ -114,11 +114,12 @@ export default async function AdminDashboardPage({
       },
       orderBy: { createdAt: "desc" },
     }),
-    getAdminAllDocuments(),
+    getAdminAllDocuments(1, 1000),
   ]);
 
   const typed = submissions as ProposalWithDocs[];
-  const docs = allDocuments as AllDocument[];
+  const docsResult = allDocuments as PaginatedResult<unknown>;
+  const docs = docsResult.data as AllDocument[];
 
   const total = typed.length;
   const pending = typed.filter((p) => p.status === "SUBMITTED").length;

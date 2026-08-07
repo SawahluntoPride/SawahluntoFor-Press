@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/auth/dal";
 import { getOrCreateSubmission, getAllDocumentsByProposal } from "@/lib/db/queries";
 import { DocumentUploader } from "@/components/ui/document-uploader";

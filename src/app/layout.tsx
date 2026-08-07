@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ConditionalHeader } from "@/components/layout/conditional-header";
 import { youngSerif, googleSansFlex, inter } from "@/lib/fonts";
+import "@/lib/config/validation";
 
 export const metadata: Metadata = {
   title: {

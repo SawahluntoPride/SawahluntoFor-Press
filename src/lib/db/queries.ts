@@ -96,38 +96,92 @@ export async function getUserProposals(userId: string, role: string) {
  * proposal and organisation.  This powers the admin "All Documents"
  * view — a single consolidated list for batch verification.
  */
-export async function getAdminAllDocuments() {
-  return prisma.document.findMany({
-    where: {},
-    include: {
-      proposal: {
-        select: {
-          id: true,
-          title: true,
-          slug: true,
-          status: true,
-          referenceNumber: true,
-          org: { select: { name: true } },
-        },
-      },
-    },
-    orderBy: { uploadedAt: "desc" },
-  });
+export interface PaginatedResult<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
-export async function getAdminSubmissions() {
-  return prisma.proposal.findMany({
-    where: {
-      status: { in: ["SUBMITTED", "IN_REVIEW", "APPROVED"] },
-    },
-    include: {
-      org: true,
-      category: true,
-      documents: true,
-      author: { select: { id: true, name: true, email: true } },
-    },
-    orderBy: { createdAt: "desc" },
-  });
+export type DocumentWithProposal = Awaited<
+  ReturnType<typeof prisma.document.findMany>
+>[number];
+
+export async function getAdminAllDocuments(
+  page: number = 1,
+  limit: number = 20,
+): Promise<PaginatedResult<DocumentWithProposal>> {
+  const skip = (page - 1) * limit;
+  const [documents, total] = await Promise.all([
+    prisma.document.findMany({
+      where: {},
+      include: {
+        proposal: {
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            status: true,
+            referenceNumber: true,
+            org: { select: { name: true } },
+          },
+        },
+      },
+      orderBy: { uploadedAt: "desc" },
+      skip,
+      take: limit,
+    }),
+    prisma.document.count(),
+  ]);
+
+  return {
+    data: documents,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+  };
+}
+
+export type ProposalWithRelations = Awaited<
+  ReturnType<typeof prisma.proposal.findMany>
+>[number];
+
+export async function getAdminSubmissions(
+  page: number = 1,
+  limit: number = 20,
+): Promise<PaginatedResult<ProposalWithRelations>> {
+  const skip = (page - 1) * limit;
+  const [proposals, total] = await Promise.all([
+    prisma.proposal.findMany({
+      where: {
+        status: { in: ["SUBMITTED", "IN_REVIEW", "APPROVED"] },
+      },
+      include: {
+        org: true,
+        category: true,
+        documents: true,
+        author: { select: { id: true, name: true, email: true } },
+      },
+      orderBy: { createdAt: "desc" },
+      skip,
+      take: limit,
+    }),
+    prisma.proposal.count({
+      where: {
+        status: { in: ["SUBMITTED", "IN_REVIEW", "APPROVED"] },
+      },
+    }),
+  ]);
+
+  return {
+    data: proposals,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+  };
 }
 
 export async function getAdminSubmission(id: string) {
@@ -258,7 +312,6 @@ export async function getDocumentStatus(proposalId: string) {
   });
   if (!proposal) return null;
 
-  const uploadedNames = proposal.documents.map((d) => d.name);
   return REQUIRED_DOCS.map((docName) => {
     const doc = proposal.documents.find((d) => d.name === docName);
     return {
