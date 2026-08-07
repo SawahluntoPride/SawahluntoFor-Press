@@ -1,4 +1,4 @@
-import { Young_Serif, Google_Sans_Flex, Inter } from "next/font/google";
+import { Young_Serif, Roboto_Flex, Inter } from "next/font/google";
 
 export const youngSerif = Young_Serif({
   subsets: ["latin", "latin-ext"],
@@ -7,9 +7,8 @@ export const youngSerif = Young_Serif({
   variable: "--font-heading",
 });
 
-export const googleSansFlex = Google_Sans_Flex({
+export const googleSansFlex = Roboto_Flex({
   subsets: ["latin"],
-  axes: ["opsz"],
   display: "swap",
   variable: "--font-body",
 });

@@ -238,7 +238,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\aplikasi penawaran kerjasama antara pemerintah dan media pers\\src\\lib\\generated\\prisma",
+      "value": "D:\\SawahluntoFor-Press\\src\\lib\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -252,7 +252,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\aplikasi penawaran kerjasama antara pemerintah dan media pers\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\SawahluntoFor-Press\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -290,10 +290,10 @@ if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
-    return fs.existsSync(path.join(process.cwd(), altPath, 'schema.prisma'))
+    return fs.existsSync(path.join(/*turbopackIgnore: true*/ process.cwd(), altPath, 'schema.prisma'))
   }) ?? alternativePaths[0]
 
-  config.dirname = path.join(process.cwd(), alternativePath)
+  config.dirname = path.join(/*turbopackIgnore: true*/ process.cwd(), alternativePath)
   config.isBundled = true
 }
 

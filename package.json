@@ -7,14 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/patch-prisma-turbopack.js",
+    "patch:prisma": "node scripts/patch-prisma-turbopack.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "jose": "^6.2.7",
-    "next": "16.2.12",
+    "next": "^16.3.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "server-only": "^0.0.1",
