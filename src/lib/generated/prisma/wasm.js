@@ -237,7 +237,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/workspace/SawahluntoPride__SawahluntoFor-Press/src/lib/generated/prisma",
+      "value": "D:\\SawahluntoFor-Press\\src\\lib\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -246,16 +246,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/workspace/SawahluntoPride__SawahluntoFor-Press/prisma/schema.prisma",
+    "sourceFilePath": "D:\\SawahluntoFor-Press\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": "../../../../.env",
+    "schemaEnvPath": "../../../../.env"
   },
   "relativePath": "../../../../prisma",
   "clientVersion": "6.19.3",
@@ -264,7 +265,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": true,
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

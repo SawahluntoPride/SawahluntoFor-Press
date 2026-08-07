@@ -53,6 +53,16 @@ const indexReplacements = [
     // Fix: config.dirname = path.join(process.cwd(), alternativePath)
     search: 'config.dirname = path.join(process.cwd(), alternativePath)',
     replace: 'config.dirname = path.join(/*turbopackIgnore: true*/ process.cwd(), alternativePath)'
+  },
+  {
+    // Fix: path.join(process.cwd(), "src/lib/generated/prisma/query_engine-windows.dll.node")
+    search: 'path.join(process.cwd(), "src/lib/generated/prisma/query_engine-windows.dll.node")',
+    replace: 'path.join(/*turbopackIgnore: true*/ process.cwd(), "src/lib/generated/prisma/query_engine-windows.dll.node")'
+  },
+  {
+    // Fix: path.join(process.cwd(), "src/lib/generated/prisma/schema.prisma")
+    search: 'path.join(process.cwd(), "src/lib/generated/prisma/schema.prisma")',
+    replace: 'path.join(/*turbopackIgnore: true*/ process.cwd(), "src/lib/generated/prisma/schema.prisma")'
   }
 ];
 
