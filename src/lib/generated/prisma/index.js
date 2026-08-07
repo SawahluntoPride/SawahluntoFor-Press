@@ -238,7 +238,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\SawahluntoFor-Press\\src\\lib\\generated\\prisma",
+      "value": "/workspace/SawahluntoPride__SawahluntoFor-Press/src/lib/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -247,17 +247,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\SawahluntoFor-Press\\prisma\\schema.prisma",
+    "sourceFilePath": "/workspace/SawahluntoPride__SawahluntoFor-Press/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../../prisma",
   "clientVersion": "6.19.3",
@@ -266,7 +265,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -290,10 +289,10 @@ if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
-    return fs.existsSync(path.join(/*turbopackIgnore: true*/ process.cwd(), altPath, 'schema.prisma'))
+    return fs.existsSync(path.join(process.cwd(), altPath, 'schema.prisma'))
   }) ?? alternativePaths[0]
 
-  config.dirname = path.join(/*turbopackIgnore: true*/ process.cwd(), alternativePath)
+  config.dirname = path.join(process.cwd(), alternativePath)
   config.isBundled = true
 }
 
@@ -315,8 +314,8 @@ exports.PrismaClient = PrismaClient
 Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
-path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "src/lib/generated/prisma/query_engine-windows.dll.node")
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "src/lib/generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "src/lib/generated/prisma/schema.prisma")

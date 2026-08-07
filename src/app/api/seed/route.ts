@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/utils";
+import "@/lib/config/validation";
 
 export async function GET() {
   if (process.env.NODE_ENV === "production") {

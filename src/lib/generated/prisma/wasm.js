@@ -237,7 +237,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\aplikasi penawaran kerjasama antara pemerintah dan media pers\\src\\lib\\generated\\prisma",
+      "value": "/workspace/SawahluntoPride__SawahluntoFor-Press/src/lib/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -246,17 +246,16 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\aplikasi penawaran kerjasama antara pemerintah dan media pers\\prisma\\schema.prisma",
+    "sourceFilePath": "/workspace/SawahluntoPride__SawahluntoFor-Press/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../../prisma",
   "clientVersion": "6.19.3",
@@ -265,7 +264,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": false,
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
