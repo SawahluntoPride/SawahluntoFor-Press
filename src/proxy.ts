@@ -4,7 +4,7 @@ import { decrypt } from "@/lib/auth/session";
 const ADMIN_LOGIN_PATH = "/admin/masuk";
 const USER_LOGIN_PATH = "/masuk";
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Halaman login admin sendiri harus tetap bisa diakses tanpa session.
@@ -14,8 +14,6 @@ export async function middleware(req: NextRequest) {
 
   const token = req.cookies.get("session")?.value;
   const payload = await decrypt(token);
-
-  const isAdminRoute = pathname.startsWith("/admin") || pathname.startsWith("/dashboard");
 
   if (!payload?.sub) {
     // Belum login sama sekali — lempar ke halaman login yang sesuai.
