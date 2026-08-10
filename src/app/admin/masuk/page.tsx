@@ -33,7 +33,7 @@ export default function AdminMasukPage() {
           <form action={action} className="admin-login-form">
             <FormField label="Email resmi" name="email" error={state?.errors?.email}>
               <Input
-                id="admin-email"
+                id="email"
                 name="email"
                 type="email"
                 placeholder="humas@sawahlunto.go.id"
@@ -45,7 +45,7 @@ export default function AdminMasukPage() {
             <FormField label="Kata sandi" name="password" error={state?.errors?.password}>
               <div className="admin-password-wrapper">
                 <Input
-                  id="admin-password"
+                  id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Masukkan kata sandi"
