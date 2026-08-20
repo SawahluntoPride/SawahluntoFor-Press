@@ -321,10 +321,9 @@ a {
 }
 
 .site-logo {
-  height: 57px;
-  width: 120px;
-  object-fit: cover;
-  object-position: left center;
+  height: auto;
+  width: 180px;
+  object-fit: contain;
   display: block;
 }
 

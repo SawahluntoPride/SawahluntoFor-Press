@@ -9,9 +9,9 @@ export function HeaderNav() {
       <Link href="/" aria-label="Kerja Sama Pers Sawahlunto">
         <Image
           src="/logo.png"
-          alt="Kerja Sama Pers Sawahlunto"
-          width={120}
-          height={57}
+          alt="Sawahlunto For PRESS - by Kominfo & Sawahlunto"
+          width={180}
+          height={39}
           className="site-logo"
           priority
         />
