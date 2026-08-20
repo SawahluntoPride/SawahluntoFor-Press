@@ -95,43 +95,73 @@ export default async function AdminDocumentsPage({
   const verifiedCount = allDocuments.filter((d) => d.verified).length;
 
   return (
-    <div className="admin-section">
+    <div className="page-shell" style={{ padding: "76px 48px", gap: 32 }}>
       {/* ── Page header ── */}
-      <div className="admin-page-header reveal">
+      <div className="reveal" style={{ width: "100%", textAlign: "left" }}>
         <p className="eyebrow">Admin Panel</p>
-        <h1 className="admin-page-title">Semua Berkas</h1>
-        <p className="lede admin-lede-wide">
+        <h1 className="section-h2">Semua Berkas</h1>
+        <p className="lede" style={{ maxWidth: 680 }}>
           Kelola seluruh berkas unggahan dari perusahaan pers. Verifikasi dokumen dan Nomor
           Pengajuan akan otomatis terbentuk saat semua berkas lengkap dan terverifikasi.
         </p>
       </div>
 
       {/* ── Summary stat cards ── */}
-      <div className="admin-stats reveal reveal-delay-1">
-        <div className="admin-stat-card">
-          <p className="admin-stat-label">Total Berkas</p>
-          <p className="admin-stat-value">{allDocuments.length}</p>
-        </div>
-        <div className="admin-stat-card">
-          <p className="admin-stat-label">Perlu Diverifikasi</p>
-          <p className="admin-stat-value accent">{unverifiedCount}</p>
-        </div>
-        <div className="admin-stat-card">
-          <p className="admin-stat-label">Terverifikasi</p>
-          <p className="admin-stat-value">{verifiedCount}</p>
+      <div className="reveal reveal-delay-1" style={{ width: "100%" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: 20,
+          marginBottom: 32
+        }}>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8 }}>Total Berkas</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-ink)" }}>
+              {allDocuments.length}
+            </p>
+          </div>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8, color: "var(--color-accent)" }}>Perlu Diverifikasi</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-accent)" }}>
+              {unverifiedCount}
+            </p>
+          </div>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8 }}>Terverifikasi</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-ink)" }}>
+              {verifiedCount}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* ── Filter tabs ── */}
-      <div className="reveal reveal-delay-2 admin-documents-toolbar">
-        <div className="admin-filter-tabs">
+      <div className="reveal reveal-delay-2" style={{ width: "100%", marginBottom: 24 }}>
+        <div style={{
+          display: "flex",
+          gap: 8,
+          flexWrap: "wrap"
+        }}>
           {FILTERS.map((f) => {
             const active = filter === f.value;
             return (
               <Link
                 key={f.value}
-               href={`/admin/documents?filter=${f.value}`}
-                className={`admin-filter-tab ${active ? "active" : ""}`}
+                href={`/admin/documents?filter=${f.value}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 16px",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: active ? "var(--color-white)" : "var(--color-muted-foreground)",
+                  borderRadius: 2,
+                  border: "1px solid var(--color-line)",
+                  background: active ? "var(--color-accent)" : "var(--color-panel)",
+                  textDecoration: "none",
+                  transition: "all 0.2s ease"
+                }}
               >
                 {f.label}
               </Link>
@@ -141,10 +171,21 @@ export default async function AdminDocumentsPage({
       </div>
 
       {/* ── Documents grid ── */}
-      <div className="reveal reveal-delay-3 admin-section">
+      <div className="reveal reveal-delay-3" style={{ width: "100%" }}>
         {filtered.length === 0 ? (
-          <div className="admin-empty-state">
-            <span className="admin-empty-icon material-symbols-rounded">
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "60px 24px",
+            textAlign: "center"
+          }}>
+            <span className="material-symbols-rounded" style={{
+              fontSize: 48,
+              color: "var(--color-muted-foreground)",
+              marginBottom: 16
+            }}>
               inbox
             </span>
             <p className="lede">
@@ -156,41 +197,76 @@ export default async function AdminDocumentsPage({
             </p>
           </div>
         ) : (
-          <div className="admin-documents-grid">
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+            gap: 20
+          }}>
             {filtered.map((doc) => {
               const icon = docIcon(doc.name);
               return (
-                <div key={doc.id} className="admin-doc-item-card panel">
-                  <div className="admin-doc-card-header">
-                    <span className="admin-doc-thumb material-symbols-rounded">
-                      {doc.verified ? "verified" : icon}
-                    </span>
-                    <div className="admin-doc-card-info">
-                      <span className="admin-doc-title">{doc.name}</span>
-                      {doc.proposal?.org?.name && (
-                        <span className="admin-doc-meta">{doc.proposal.org.name}</span>
-                      )}
-                      <span className="admin-doc-meta">
-                        Diunggah {formatDateTime(doc.uploadedAt)} • {formatFileSize(doc.size)}
+                <div key={doc.id} className="panel" style={{ borderRadius: 2, border: "1px solid var(--color-line)", background: "var(--color-panel)", overflow: "hidden" }}>
+                  <div style={{ padding: 20, borderBottom: "1px solid var(--color-line)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+                      <span className="material-symbols-rounded" style={{
+                        fontSize: 20,
+                        color: doc.verified ? "var(--color-accent)" : "var(--color-muted-foreground)"
+                      }}>
+                        {doc.verified ? "verified" : icon}
                       </span>
-                      {doc.proposal?.referenceNumber ? (
-                        <span className="admin-doc-ref">
-                          {doc.proposal.referenceNumber}
+                      <div style={{ flex: 1 }}>
+                        <span style={{ display: "block", fontSize: 14, fontWeight: 600, color: "var(--color-ink)", marginBottom: 4 }}>
+                          {doc.name}
                         </span>
-                      ) : (
-                        <span className="admin-doc-meta danger">
-                          Belum ada nomor
+                        {doc.proposal?.org?.name && (
+                          <span style={{ display: "block", fontSize: 13, color: "var(--color-ink)", fontWeight: 500, marginBottom: 4 }}>
+                            {doc.proposal.org.name}
+                          </span>
+                        )}
+                        <span style={{ fontSize: 12, color: "var(--color-muted-foreground)" }}>
+                          Diunggah {formatDateTime(doc.uploadedAt)} • {formatFileSize(doc.size)}
                         </span>
-                      )}
+                        {doc.proposal?.referenceNumber ? (
+                          <span style={{
+                            display: "inline-block",
+                            marginTop: 8,
+                            padding: "4px 10px",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            borderRadius: 2,
+                            background: "var(--color-orange-100)",
+                            color: "var(--color-accent)"
+                          }}>
+                            {doc.proposal.referenceNumber}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: 12, color: "var(--color-danger)", marginTop: 8, display: "block" }}>
+                            Belum ada nomor
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
-                  <div className="admin-doc-card-actions">
+                  <div style={{ display: "flex", gap: 8, padding: 16, background: "var(--color-slate-50)" }}>
                     <a
                       href={doc.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="admin-action-link"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        padding: "8px 12px",
+                        fontSize: 13,
+                        fontWeight: 500,
+                        color: "var(--color-ink)",
+                        background: "var(--color-panel)",
+                        border: "1px solid var(--color-line)",
+                        borderRadius: 2,
+                        textDecoration: "none",
+                        transition: "all 0.2s ease"
+                      }}
                     >
                       <span className="material-symbols-rounded">visibility</span>
                       Praverifikasi

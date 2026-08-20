@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { AdminHeader } from "@/components/admin/admin-header";
-import { AdminSidebar } from "@/components/admin/admin-sidebar";
 
 export const metadata = {
   title: "Admin Dashboard",
@@ -12,8 +11,8 @@ export const metadata = {
 /**
  * The admin layout wraps every route under /admin/.
  *
- * It fetches the current session and renders the admin chrome (header +
- * sidebar) only when the user is an admin/apparatus.  On the login page
+ * It fetches the current session and renders the admin chrome (header)
+ * only when the user is an admin/apparatus. On the login page
  * (/admin/masuk) no user is present so the chrome is hidden and the
  * login form is rendered full-width.
  *
@@ -26,24 +25,13 @@ export default async function AdminLayout({ children }: { children: ReactNode })
 
   // Login page — no admin chrome, just the form centred on the page.
   if (!isAdmin) {
-    return (
-      <div className="admin-layout admin-login-page">
-        <main className="admin-main">
-          <div className="admin-content">{children}</div>
-        </main>
-      </div>
-    );
+    return <>{children}</>;
   }
 
   return (
-    <div className="admin-layout">
+    <>
       <AdminHeader user={user} />
-      <div className="admin-inner">
-        <AdminSidebar />
-        <main className="admin-main">
-          <div className="admin-content">{children}</div>
-        </main>
-      </div>
-    </div>
+      {children}
+    </>
   );
 }

@@ -155,71 +155,112 @@ export default async function AdminDashboardPage({
   const verifiedCount = docsWithRef.filter((d) => d.verified).length;
 
   return (
-    <div className="admin-section">
+    <div className="page-shell" style={{ padding: "76px 48px", gap: 32 }}>
       {/* ── Page header ── */}
-      <div className="admin-page-header reveal">
+      <div className="reveal" style={{ width: "100%", textAlign: "left" }}>
         <p className="eyebrow">Admin Panel</p>
-        <h1 className="admin-page-title">Dashboard Verifikasi Dokumen</h1>
-        <p className="lede">
+        <h1 className="section-h2">Dashboard Verifikasi Dokumen</h1>
+        <p className="lede" style={{ maxWidth: 680 }}>
           Kelola semua berkas unggahan perusahaan pers. Verifikasi dokumen dan Nomor Pengajuan
           akan otomatis terbentuk saat semua berkas lengkap dan terverifikasi.
         </p>
       </div>
 
       {/* ── Summary stat cards ── */}
-      <div className="admin-stats reveal reveal-delay-1">
-        <div className="admin-stat-card">
-          <p className="admin-stat-label">Total Pengajuan</p>
-          <p className="admin-stat-value">{total}</p>
-        </div>
-        <div className="admin-stat-card">
-          <p className="admin-stat-label accent">Menunggu Verifikasi</p>
-          <p className="admin-stat-value accent">{pending}</p>
-        </div>
-        <div className="admin-stat-card">
-          <p className="admin-stat-label">Dalam Review</p>
-          <p className="admin-stat-value">{inReview}</p>
-        </div>
-        <div className="admin-stat-card">
-          <p className="admin-stat-label">Terverifikasi</p>
-          <p className="admin-stat-value">{approved}</p>
+      <div className="reveal reveal-delay-1" style={{ width: "100%" }}>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: 20,
+          marginBottom: 32
+        }}>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8 }}>Total Pengajuan</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-ink)" }}>
+              {total}
+            </p>
+          </div>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8, color: "var(--color-accent)" }}>Menunggu Verifikasi</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-accent)" }}>
+              {pending}
+            </p>
+          </div>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8 }}>Dalam Review</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-ink)" }}>
+              {inReview}
+            </p>
+          </div>
+          <div className="panel" style={{ padding: 24 }}>
+            <p className="eyebrow" style={{ marginBottom: 8 }}>Terverifikasi</p>
+            <p className="font-heading" style={{ fontSize: 32, lineHeight: 1, color: "var(--color-ink)" }}>
+              {approved}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* ── All uploaded documents — consolidated verification view ── */}
-      <div className="reveal reveal-delay-2 admin-section">
-
-        <div className="admin-sub-section">
-          <div className="admin-section-header-row">
-            <p className="eyebrow">Semua Berkas</p>
-            <p className="lede">
-              {filteredDocs.length} berkas ditampilkan · {unverifiedCount} belum terverifikasi ·{" "}
-              {verifiedCount} sudah terverifikasi · {docsWithRef.length} total
-            </p>
-          </div>
-
-          {/* Filter tabs */}
-          <div className="admin-filter-tabs">
-            {DOC_FILTERS.map((f) => {
-              const active = docFilter === f.value;
-              return (
-                <Link
-                  key={f.value}
-                  href={`/admin?docFilter=${f.value}`}
-                  className={`admin-filter-tab ${active ? "active" : ""}`}
-                >
-                  {f.label}
-                </Link>
-              );
-            })}
-          </div>
-
-          <h2 className="admin-section-subheading">Berkas yang Perlu Diverifikasi</h2>
+      <div className="reveal reveal-delay-2" style={{ width: "100%" }}>
+        <div style={{ marginBottom: 24 }}>
+          <p className="eyebrow">Semua Berkas</p>
+          <p className="lede" style={{ marginTop: 8 }}>
+            {filteredDocs.length} berkas ditampilkan · {unverifiedCount} belum terverifikasi ·{" "}
+            {verifiedCount} sudah terverifikasi · {docsWithRef.length} total
+          </p>
         </div>
 
+        {/* Filter tabs */}
+        <div style={{
+          display: "flex",
+          gap: 8,
+          marginBottom: 24,
+          flexWrap: "wrap"
+        }}>
+          {DOC_FILTERS.map((f) => {
+            const active = docFilter === f.value;
+            return (
+              <Link
+                key={f.value}
+                href={`/admin?docFilter=${f.value}`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 16px",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: active ? "var(--color-white)" : "var(--color-muted-foreground)",
+                  borderRadius: 2,
+                  border: "1px solid var(--color-line)",
+                  background: active ? "var(--color-accent)" : "var(--color-panel)",
+                  textDecoration: "none",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                {f.label}
+              </Link>
+            );
+          })}
+        </div>
+
+        <h2 className="step-h3" style={{ marginBottom: 20 }}>Berkas yang Perlu Diverifikasi</h2>
+
         {filteredDocs.length === 0 ? (
-          <div className="admin-empty-state">
-            <span className="admin-empty-icon material-symbols-rounded">
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "60px 24px",
+            textAlign: "center"
+          }}>
+            <span className="material-symbols-rounded" style={{
+              fontSize: 48,
+              color: "var(--color-muted-foreground)",
+              marginBottom: 16
+            }}>
               inbox
             </span>
             <p className="lede">
@@ -231,43 +272,88 @@ export default async function AdminDashboardPage({
             </p>
           </div>
         ) : (
-          <div className="admin-documents-section">
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {filteredDocs.map((doc) => {
               const icon = docIcon(doc.name);
               return (
-                <div key={doc.id} className="admin-doc-card">
-                  <div className="admin-doc-card-left">
-                    <span className="admin-doc-thumb material-symbols-rounded">
+                <div key={doc.id} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: 16,
+                  borderRadius: 2,
+                  border: "1px solid var(--color-line)",
+                  background: "var(--color-panel)",
+                  transition: "border-color 0.2s ease"
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, flex: 1, minWidth: 0 }}>
+                    <span className="material-symbols-rounded" style={{
+                      fontSize: 20,
+                      color: doc.verified ? "var(--color-accent)" : "var(--color-muted-foreground)"
+                    }}>
                       {doc.verified ? "verified" : icon}
                     </span>
-                    <div className="admin-doc-info">
-                      <span className="admin-doc-title">{doc.name}</span>
-                      <div className="admin-doc-meta-row">
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <span style={{ display: "block", fontSize: 14, fontWeight: 600, color: "var(--color-ink)", marginBottom: 4 }}>
+                        {doc.name}
+                      </span>
+                      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
                         {doc.proposal?.org?.name && (
-                          <span className="admin-doc-org">{doc.proposal.org.name}</span>
+                          <span style={{ fontSize: 13, color: "var(--color-ink)", fontWeight: 500 }}>
+                            {doc.proposal.org.name}
+                          </span>
                         )}
-                        <span className="admin-doc-date">Diunggah {formatDateTime(doc.uploadedAt)}</span>
-                        <span className="admin-doc-date">{formatFileSize(doc.size)}</span>
+                        <span style={{ fontSize: 12, color: "var(--color-muted-foreground)" }}>
+                          Diunggah {formatDateTime(doc.uploadedAt)}
+                        </span>
+                        <span style={{ fontSize: 12, color: "var(--color-muted-foreground)" }}>
+                          {formatFileSize(doc.size)}
+                        </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="admin-doc-right">
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
                     {/* Reference number prominently displayed */}
                     {doc.refNumber ? (
-                      <span className="ref-number ref-number-generated">{doc.refNumber}</span>
+                      <span style={{
+                        display: "inline-block",
+                        padding: "4px 10px",
+                        fontSize: 12,
+                        fontWeight: 600,
+                        borderRadius: 2,
+                        background: "var(--color-orange-100)",
+                        color: "var(--color-accent)"
+                      }}>
+                        {doc.refNumber}
+                      </span>
                     ) : (
-                      <span className="admin-badge admin-badge-pending-docs small">
-                        <span className="material-symbols-rounded">schedule</span>
+                      <span style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                        padding: "2px 6px",
+                        fontSize: 11,
+                        fontWeight: 500,
+                        borderRadius: 2,
+                        background: "var(--color-slate-200)",
+                        color: "var(--color-slate-600)"
+                      }}>
+                        <span className="material-symbols-rounded" style={{ fontSize: 14 }}>schedule</span>
                         Belum ada nomor
                       </span>
                     )}
 
                     {/* Verification status + action */}
-                    <div
-                      className={`admin-doc-status ${doc.verified ? "admin-doc-status-verified" : "admin-doc-status-pending"}`}
-                    >
-                      <span className="admin-doc-status-small">
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span style={{
+                        fontSize: 12,
+                        fontWeight: 500,
+                        padding: "4px 8px",
+                        borderRadius: 2,
+                        background: doc.verified ? "var(--color-orange-100)" : "var(--color-slate-200)",
+                        color: doc.verified ? "var(--color-accent)" : "var(--color-slate-700)"
+                      }}>
                         {doc.verified ? "Terverifikasi" : "Butuh Verifikasi"}
                       </span>
                       {!doc.verified && (
@@ -283,92 +369,231 @@ export default async function AdminDashboardPage({
       </div>
 
       {/* ── Submission table (overview of proposals) ── */}
-      <div className="reveal reveal-delay-3 admin-section">
-        <div className="admin-sub-section">
-          <div className="admin-section-header-row">
-            <p className="eyebrow">Daftar Pengajuan</p>
-            <p className="lede">
-              Total {total} pengajuan · {pending} menunggu · {inReview} dalam review · {approved} disetujui
-            </p>
-          </div>
-
-          <h2 className="admin-section-subheading">Ringkasan Pengajuan</h2>
+      <div className="reveal reveal-delay-3" style={{ width: "100%" }}>
+        <div style={{ marginBottom: 24 }}>
+          <p className="eyebrow">Daftar Pengajuan</p>
+          <p className="lede" style={{ marginTop: 8 }}>
+            Total {total} pengajuan · {pending} menunggu · {inReview} dalam review · {approved} disetujui
+          </p>
         </div>
 
+        <h2 className="step-h3" style={{ marginBottom: 20 }}>Ringkasan Pengajuan</h2>
+
         {typed.length === 0 ? (
-          <div className="admin-empty-state">
-            <span className="admin-empty-icon material-symbols-rounded">
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "60px 24px",
+            textAlign: "center"
+          }}>
+            <span className="material-symbols-rounded" style={{
+              fontSize: 48,
+              color: "var(--color-muted-foreground)",
+              marginBottom: 16
+            }}>
               inbox
             </span>
             <p className="lede">Belum ada pengajuan yang perlu diverifikasi.</p>
           </div>
         ) : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th className="col-num">#</th>
-                <th>Organisasi</th>
-                <th>Agenda / Proposal</th>
-                <th>Tanggal</th>
-                <th>Dokumen</th>
-                <th className="col-verified">Status</th>
-                <th className="col-ref">Nomor Pengajuan</th>
-                <th className="col-num">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {typed.map((p, i) => {
-                const prog = getDocProgress(p);
-                return (
-                  <tr key={p.id}>
-                    <td className="col-num">{i + 1}</td>
-                    <td>
-                      <Link href={`/admin/proposals/${p.id}`}>
-                        {p.org?.name ?? "—"}
-                      </Link>
-                    </td>
-                    <td className="col-title">{p.title}</td>
-                    <td className="col-date">{formatDate(p.createdAt)}</td>
-                    <td>
-                      <div className="admin-progress">
-                        <span className="admin-progress-count">{prog.verified}/{prog.total}</span>
-                        <div className="admin-progress-bar">
-                          <div
-                            className="admin-progress-fill"
-                            style={{ width: `${Math.max((prog.verified / prog.total) * 100, 2)}%` }}
-                          />
+          <div className="table-container">
+            <table style={{
+              width: "100%",
+              borderCollapse: "collapse"
+            }}>
+              <thead>
+                <tr>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>#</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Organisasi</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Agenda / Proposal</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Tanggal</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Dokumen</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Status</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Nomor Pengajuan</th>
+                  <th style={{
+                    padding: "14px 16px",
+                    textAlign: "left",
+                    borderBottom: "1px solid var(--color-line)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--color-muted-foreground)",
+                    background: "var(--color-panel)"
+                  }}>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {typed.map((p, i) => {
+                  const prog = getDocProgress(p);
+                  return (
+                    <tr key={p.id} style={{ borderBottom: "1px solid var(--color-line)" }}>
+                      <td style={{ padding: "14px 16px", width: 48, textAlign: "center" }}>{i + 1}</td>
+                      <td style={{ padding: "14px 16px" }}>
+                        <Link href={`/admin/proposals/${p.id}`} style={{ color: "var(--color-ink)", textDecoration: "none" }}>
+                          {p.org?.name ?? "—"}
+                        </Link>
+                      </td>
+                      <td style={{ padding: "14px 16px", maxWidth: 300, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {p.title}
+                      </td>
+                      <td style={{ padding: "14px 16px", whiteSpace: "nowrap" }}>{formatDate(p.createdAt)}</td>
+                      <td style={{ padding: "14px 16px" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                          <span style={{ fontSize: 13, fontWeight: 600, color: "var(--color-ink)", minWidth: 40 }}>
+                            {prog.verified}/{prog.total}
+                          </span>
+                          <div style={{ flex: 1, height: 6, background: "var(--color-slate-200)", borderRadius: 2, overflow: "hidden" }}>
+                            <div style={{
+                              height: "100%",
+                              background: "var(--color-accent)",
+                              borderRadius: 2,
+                              width: `${Math.max((prog.verified / prog.total) * 100, 2)}%`
+                            }} />
+                          </div>
                         </div>
-                      </div>
-                      <p className="admin-progress-note">
-                        {prog.uploaded}/{prog.total} terunggah
-                      </p>
-                    </td>
-                    <td className="col-verified">
-                      <span className={`admin-badge ${STATUS_CLASSES[p.status] ?? ""}`}>
-                        {STATUS_LABELS[p.status] ?? p.status}
-                      </span>
-                    </td>
-                    <td className="col-ref">
-                      {p.referenceNumber ? (
-                        <span className="ref-number ref-number-generated">{p.referenceNumber}</span>
-                      ) : (
-                        <span className="ref-number">Belum dibuat</span>
-                      )}
-                    </td>
-                    <td className="col-num">
-                      <Link
-                        href={`/admin/proposals/${p.id}`}
-                        className="action-link"
-                      >
-                        <span className="material-symbols-rounded">visibility</span>
-                        Detail
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                        <p style={{ fontSize: 11, color: "var(--color-muted-foreground)", marginTop: 4 }}>
+                          {prog.uploaded}/{prog.total} terunggah
+                        </p>
+                      </td>
+                      <td style={{ padding: "14px 16px", width: 120 }}>
+                        <span style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 6,
+                          padding: "4px 10px",
+                          fontSize: 12,
+                          fontWeight: 500,
+                          borderRadius: 2,
+                          background: STATUS_CLASSES[p.status] ? "var(--color-orange-100)" : "var(--color-slate-200)",
+                          color: STATUS_CLASSES[p.status] ? "var(--color-accent)" : "var(--color-slate-700)"
+                        }}>
+                          {STATUS_LABELS[p.status] ?? p.status}
+                        </span>
+                      </td>
+                      <td style={{ padding: "14px 16px", width: 160 }}>
+                        {p.referenceNumber ? (
+                          <span style={{
+                            display: "inline-block",
+                            padding: "4px 10px",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            borderRadius: 2,
+                            background: "var(--color-orange-100)",
+                            color: "var(--color-accent)"
+                          }}>
+                            {p.referenceNumber}
+                          </span>
+                        ) : (
+                          <span style={{
+                            display: "inline-block",
+                            padding: "4px 10px",
+                            fontSize: 12,
+                            fontWeight: 600,
+                            borderRadius: 2,
+                            background: "var(--color-slate-100)",
+                            color: "var(--color-slate-800)"
+                          }}>
+                            Belum dibuat
+                          </span>
+                        )}
+                      </td>
+                      <td style={{ padding: "14px 16px", width: 48 }}>
+                        <Link
+                          href={`/admin/proposals/${p.id}`}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 6,
+                            fontSize: 13,
+                            fontWeight: 500,
+                            color: "var(--color-ink)",
+                            textDecoration: "none",
+                            transition: "color 0.2s ease"
+                          }}
+                        >
+                          <span className="material-symbols-rounded">visibility</span>
+                          Detail
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>
