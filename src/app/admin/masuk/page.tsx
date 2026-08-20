@@ -2,7 +2,6 @@
 
 import { useActionState, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { FormField } from "@/components/ui/form-field";
 
@@ -96,53 +95,6 @@ export default function AdminMasukPage() {
             </button>
           </div>
         </FormField>
-                name="email"
-                type="email"
-                placeholder="humas@sawahlunto.go.id"
-                required
-                disabled={pending}
-              />
-            </FormField>
-
-            <FormField label="Kata sandi" name="password" error={state?.errors?.password}>
-              <div style={{ position: "relative" }}>
-                <Input
-                  id="admin-password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Masukkan kata sandi"
-                  required
-                  disabled={pending}
-                  style={{ paddingRight: 56 }}
-                />
-                <button
-                  type="button"
-                  tabIndex={-1}
-                  style={{
-                    position: "absolute",
-                    right: 12,
-                    top: 12,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 32,
-                    height: 32,
-                    padding: 0,
-                    background: "transparent",
-                    border: "none",
-                    cursor: "pointer",
-                    color: "var(--color-muted-foreground)",
-                    transition: "color 0.2s ease"
-                  }}
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
-                >
-                  <span className="material-symbols-rounded">
-                    {showPassword ? "visibility_off" : "visibility"}
-                  </span>
-                </button>
-              </div>
-            </FormField>
 
             {state?.message && (
               <p style={{
@@ -210,8 +162,6 @@ export default function AdminMasukPage() {
               Kembali ke situs publik
             </Link>
           </div>
-        </div>
-      </div>
     </div>
   );
 }
