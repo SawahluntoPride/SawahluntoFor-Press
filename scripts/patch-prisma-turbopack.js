@@ -94,4 +94,4 @@ if (patchFile(libraryFile, libraryReplacements)) {
   totalPatched++;
 }
 
-console.log(`\n✅ Done! Patched files.`);
+console.log(`\n Done! Patched files.`);
