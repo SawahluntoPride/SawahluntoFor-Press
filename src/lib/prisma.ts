@@ -6,19 +6,19 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 // Fix: Ensure the database path is correctly resolved for SQLite on Windows
-// Next.js loads .env.local and .env, but DATABASE_URL may use relative path "file:./prisma/dev.db"
-// We need to convert this to an absolute path that works on Windows
+// Next.js loads .env.local and .env, but DATABASE_URL may use relative path "file:./dev.db"
+// Prisma CLI resolves relative "file:" paths against the folder containing schema.prisma
+// (i.e. prisma/), so we need to resolve against that same folder here, not process.cwd().
 const dbUrl = process.env.DATABASE_URL;
+const PRISMA_SCHEMA_DIR = path.join(process.cwd(), "prisma");
 
-// Convert file:./prisma/dev.db to file:/D:/SawahluntoFor-Press/prisma/dev.db
-// On Windows, SQLite needs absolute paths with forward slashes in file: URLs
 const prismaUrl = dbUrl
   ? dbUrl.startsWith("file:")
     ? dbUrl.slice(5).startsWith("/") || dbUrl.slice(5).match(/^[a-zA-Z]:/)
-      ? dbUrl.replace(/\\/g, "/")  // Already absolute, just normalize slashes
-      : `file:${path.resolve(/*turbopackIgnore: true*/ process.cwd(), dbUrl.slice(5)).replace(/\\/g, "/")}`
-    : dbUrl.replace(/\\/g, "/")
-  : `file:${path.resolve(/*turbopackIgnore: true*/ process.cwd(), "prisma", "dev.db").replace(/\\/g, "/")}`;
+      ? dbUrl.replace(/\\/g, "/") // Already absolute, just normalize slashes
+      : `file:${path.resolve(/*turbopackIgnore: true*/ PRISMA_SCHEMA_DIR, dbUrl.slice(5)).replace(/\\/g, "/")}`
+    : dbUrl.replace(/\\/g, "/") // Non-SQLite connection string (mysql://, postgresql://, etc.) — leave untouched
+  : `file:${path.resolve(/*turbopackIgnore: true*/ PRISMA_SCHEMA_DIR, "dev.db").replace(/\\/g, "/")}`;
 
 // Set the environment variable so Prisma's inline schema picks it up
 if (!process.env.DATABASE_URL_OVERRIDE) {
