@@ -237,7 +237,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\SawahluntoFor-Press\\src\\lib\\generated\\prisma",
+      "value": "D:\\Project\\Magang\\SawahluntoFor-Press\\src\\lib\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -251,11 +251,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\SawahluntoFor-Press\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Project\\Magang\\SawahluntoFor-Press\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../../.env"
   },
   "relativePath": "../../../../prisma",
@@ -265,7 +265,6 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
